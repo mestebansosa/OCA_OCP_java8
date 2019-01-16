@@ -12,7 +12,7 @@ public class OptionalType {
 		return Optional.of((double) sum / scores.length);
 	}
 
-	// Chainnig Optionals
+	// Chainning Optionals
 	// A few of the intermediate operations for streams are available for Optional.
 	private void threeDigitClassic(Optional<Integer> optional) {
 		if (optional.isPresent()) { // outer if
@@ -34,25 +34,28 @@ public class OptionalType {
 		// Returning an Optional is a clear statement in the API that there might not be
 		// a value in there.
 		
+		System.out.println(average(90, 100)); // Optional[95.0]
+		System.out.println(average()); // Optional.empty
+		
 		Optional<Double> opt = average(90, 100);
+		System.out.println(opt.get()); // 95.0 bad
 		if (opt.isPresent())
-			System.out.println(opt.get()); // 95.0
-		opt.ifPresent(System.out::println); // Functional programming
+			System.out.println(opt.get()); // 95.0 better
+		opt.ifPresent(System.out::println); // 95.0 Functional programming
 		
 		Integer value = 100;
+		// next two lines are the same.
 		Optional<Integer> o = (value== null) ? Optional.empty(): Optional.of(value);
 		Optional<Integer> o2 = Optional.ofNullable(value);
 		
 		Optional<Double> opt1 = average();
-		// System.out.println(opt1.get()); // bad
-		System.out.println(opt1.orElse(Double.NaN));
-		System.out.println(opt1.orElseGet(() -> Math.random()));
-		// System.out.println(opt1.orElseThrow(() -> new IllegalStateException()));
+		System.out.println(opt1.orElse(Double.NaN)); // when optional is empty returns NaN.
+		System.out.println(opt1.orElseGet(() -> Math.random())); // when optional is empty returns Math.
+		// System.out.println(opt1.orElseThrow(() -> new IllegalStateException())); // when optional is empty throw
 		
 		Optional<Double> opt2 = average(90, 100, 200);
 		System.out.println(opt2.orElse(Double.NaN));
 		System.out.println(opt2.orElseGet(() -> Math.random()));
 		System.out.println(opt2.orElseThrow(() -> new IllegalStateException()));
-		
 	}
 }

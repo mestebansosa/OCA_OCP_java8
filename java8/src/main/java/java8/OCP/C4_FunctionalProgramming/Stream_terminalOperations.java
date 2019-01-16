@@ -24,9 +24,24 @@ public class Stream_terminalOperations {
 		// https://www.baeldung.com/java-stream-operated-upon-or-closed-exception
 		Supplier<Stream<String>> streamSupplierAnimals = () -> Stream.of("monkey", "gorilla", "bonobo");
 		Supplier<Stream<String>> streamSupplierWolf = () -> Stream.of("w", "o", "l", "f");
-		Supplier<Stream<String>> ohMy = () -> Stream.of("lions", "tigers", "bears");
 
 
+		/*
+		 Terminal stream operations
+			Method 			WhatHappensforInfiniteStreams	ReturnValue	Reduction
+			allMatch()		Sometimes terminates 			boolean 	No
+			anyMatch()
+			noneMatch()
+				
+			collect() 		Does not terminate 				Varies 		Yes
+			count() 		Does not terminate 				long 		Yes
+			findAny()		Terminates 						Optional<T>	No
+			findFirst()
+				
+			forEach() 		Does not terminate 				void 		No
+			min()/max() 	Does not terminate 				Optional<T>	Yes
+			reduce()	 	Does not terminate 				Varies 		Yes
+		 */
 		// count(). 
 		//   Reduction. Hang on an infinite stream. Returns long.
 		Stream<Integer> fromArray = Stream.of(1, 2, 3); // count = 2
@@ -67,8 +82,10 @@ public class Stream_terminalOperations {
 
 		// reduce()
 		//   Reduction. Hang on an infinite stream. Returns Varies
-		// Reduction. 3 ways
+		// Reduction. 3 ways (parameters: identity, accumulator and combiner)
 		// Sum, min, max, average, and string concatenation are special cases of reduction
+		// 		Integer sum = integers.reduce(0, (a, b) -> a+b);
+		// 		Integer sum = integers.reduce(0, Integer::sum);
 		// reduce() way 1, with identity and accumulator
 		System.out.println(streamSupplierWolf.get().reduce("", (string, toAdd) -> string + toAdd)); // wolf
 		System.out.println(streamSupplierWolf.get().reduce("", (string, toAdd) -> string.concat(toAdd))); // wolf
@@ -77,7 +94,8 @@ public class Stream_terminalOperations {
 		Stream<Integer> stream2 = Stream.of(3, 5, 6);
 		System.out.println(stream2.reduce(1, (a, b) -> a * b)); // 90
 
-		// reduce() way 2, ony with accumulator so returns optional
+		// reduce() way 2, ony with accumulator. When you don’t specify an identity, 
+		//   an Optional is returned because there might not be any data.
 		BinaryOperator<Integer> op = (a, b) -> a * b;
 		Stream<Integer> empty = Stream.empty();
 		Stream<Integer> oneElement = Stream.of(3);
@@ -86,12 +104,12 @@ public class Stream_terminalOperations {
 		oneElement.reduce(op).ifPresent(System.out::print); // 3
 		threeElements.reduce(op).ifPresent(System.out::print); // 90
 
-		// reduce() way 3 parallel, with identity, accumulator and combiner
+		// reduce() way 3, processing in parallel, with identity, accumulator and combiner
 		BinaryOperator<Integer> op2 = (a, b) -> a * b;
 		Stream<Integer> stream3 = Stream.of(3, 5, 6);
 		System.out.println(stream3.reduce(1, op2, op2)); // 90
 
-		// collect().
+		// collect(). Two ways. Parameters: supplier, accumulator and combiner
 		//   Reduction. Hang on an infinite stream. Returns Varies
 		// Mutable Reduction. We use the same mutable object while accumulating so it is
 		// more efficient than a regular reduction
@@ -102,65 +120,10 @@ public class Stream_terminalOperations {
 		TreeSet<String> treeSet = streamSupplierWolf.get().collect(TreeSet::new, TreeSet::add, TreeSet::addAll);
 		System.out.println(treeSet); // [f, l, o, w]
 
-		// collect() way 2. Using Collectors (implement Collector Interface)
+		// collect() way 2. Using Collectors (implement Collector Interface).
+		// A Collector goes into collect(). It doesn't do anything on its own. See Collection_results.java
 		System.out.println(streamSupplierWolf.get().collect(Collectors.toCollection(TreeSet::new))); // [f, l, o, w]
 		System.out.println(streamSupplierWolf.get().collect(Collectors.toSet())); // [f, w, l, o]
 
-		// grouping/partitioning collectors
-		/*
-		averagingDouble(ToDoubleFunction f)
-		counting() Counts number of elements
-		groupingBy(Function f, Supplier s, Collector dc) 
-		   Creates a map grouping by the specified function with the type and downstream collector
-		joining(CharSequence cs) Creates a single String using cs as a delimiter between elements.		
-
-		maxBy(Comparator c)
-		minBy(Comparator c) Finds the largest/smallest elements
-		mapping(Function f, Collector dc) Adds another level of collectors
-		partitioningBy(Predicate p, Collector dc) 
-		  Creates a map grouping by the specified predicate with the optional downstream collector
-		
-		summarizingDouble(ToDoubleFunction f) Calculates average, min, max, and so on
-		summingDouble(ToDoubleFunction f) Calculates the sum for our three core primitive types
-		toList()
-		toSet() Creates an arbitrary type of list or set
-		toCollection(Supplier s) Creates a Collection of the specified type
-		toMap(Function k, Function v)
-
-        toMap(Function k, Function v, BinaryOperator m, Supplier s)
-          Creates a map using functions to map the keys, values, an merge function, and a type
-		*/
-		// A Collector goes into collect(). It doesn't do anything on its own.
-		Double result = ohMy.get().collect(Collectors.averagingInt(String::length));
-		System.out.println(result); // 5.333333333333333
-		
-		// Collecting into Maps
-		Map<String, Integer> map = ohMy.get().collect(Collectors.toMap(s -> s, String::length));
-		System.out.println(map); // {lions=5, bears=5, tigers=6}
-		
-		// Collecting Using Grouping, Partitioning, and Mapping
-		Map<Integer, List<String>> mapOhMy = ohMy.get().collect(
-		Collectors.groupingBy(String::length));
-		System.out.println(mapOhMy); // {5=[lions, bears], 6=[tigers]}
-		
-		Map<Integer, Set<String>> mapSet = ohMy.get().collect(
-		Collectors.groupingBy(String::length, Collectors.toSet()));
-		System.out.println(mapSet); // {5=[lions, bears], 6=[tigers]}
-		
-		Map<Boolean, List<String>> mapPartition = ohMy.get().collect(
-		Collectors.partitioningBy(s -> s.length() <= 5));
-		System.out.println(mapPartition); // {false=[tigers], true=[lions, bears]}
-		
-		Map<Integer, Long> mapCounting = ohMy.get().collect(Collectors.groupingBy(
-		String::length, Collectors.counting()));
-		System.out.println(mapCounting); // {5=2, 6=1}
-		
-		// we wanted to get the first letter of the first animal alphabetically of each length.
-		Map<Integer, Optional<Character>> mapMinBy = ohMy.get().collect(
-				Collectors.groupingBy(
-				String::length,
-				Collectors.mapping(s -> s.charAt(0),
-				Collectors.minBy(Comparator.naturalOrder()))));
-				System.out.println(mapMinBy); // {5=Optional[b], 6=Optional[t]}		
 	}
 }

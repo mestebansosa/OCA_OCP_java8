@@ -7,7 +7,8 @@ import java.util.stream.Stream;
 public class Stream_creation {
 	public static void main(String[] args) {
 
-		// A stream in Java is a sequence of data. A stream pipeline is the operations that run on a stream to produce a result.
+		// A stream in Java is a sequence of data. 
+		// A stream pipeline is the operations that run on a stream to produce a result.
 		/*
 		 There are three parts to a stream pipeline:
          - Source: Where the stream comes from.
@@ -18,7 +19,7 @@ public class Stream_creation {
            the stream is no longer valid after a terminal operation completes.
 		 */
 		
-		// Threre are few ways to create finite streams
+		// There are few ways to create finite streams
 		Stream<String> empty = Stream.empty(); // count = 0
 		Stream<Integer> singleElement = Stream.of(1); // count = 1
 		Stream<Integer> fromArray = Stream.of(1, 2, 3); // count = 3		

@@ -53,6 +53,23 @@ public class BuiltIn_FunctionalInterfaces {
 	}
 	
 	public static void main(String[] args) {
+		/* 
+		Common functional interfaces
+		FunctionalInterfaces Parameters ReturnType SingleAbstractMethod
+	    -------------------- ---------- ---------- --------------------
+		Supplier<T>          0          T          get
+		Consumer<T>          1 (T)      void       accept
+		BiConsumer<T, U>     2 (T, U)   void       accept
+		Predicate<T>         1 (T)      boolean    test
+		BiPredicate<T, U>    2 (T, U)   boolean    test
+		Function<T, R>       1 (T)      R          apply
+		BiFunction<T, U, R>  2 (T, U)   R          apply
+		UnaryOperator<T>     1 (T)      T          apply
+		BinaryOperator<T>    2 (T, T)   T          apply
+		
+		Runnable             0          void       run
+		*/
+		
 		// A Supplier is used when you want to generate or supply (return) values
 		// without taking any input.
 		Supplier<LocalDate> s1 = LocalDate::now;
@@ -93,7 +110,7 @@ public class BuiltIn_FunctionalInterfaces {
 		System.out.println(biPred1.test("chicken", "chick"));
 		System.out.println(biPred2.test("chicken", "chick")); // note that test returns a boolean
 
-		// more methods in functional interfaces. Default methods.
+		// more methods in functional interfaces. Default methods for chaining
 		Predicate<String> egg = s -> s.contains("egg");
 		Predicate<String> brown = s -> s.contains("brown");
 		Predicate<String> brownEggs = egg.and(brown);
@@ -124,16 +141,15 @@ public class BuiltIn_FunctionalInterfaces {
 		// identify the error
 		// Function<List<String>> ex1 = x -> x.get(0); // DOES NOT COMPILE, has no return type
 		// UnaryOperator<Long> ex2 = (Long l) -> 3.14; // DOES NOT COMIPLE, return double.
-		// Predicate ex4 = String::isEmpty; // DOES NOT COMPILE, where is teh type <>
+		// Predicate ex4 = String::isEmpty; // DOES NOT COMPILE, where is the type <>
 		
 		
 		// Checked Exceptions and Functional Interfaces
-		// The functional interfaces do not declare checked exceptions. This is normally
-		// OK. However, it is a problem when working with methods that declare checked
-		// exceptions.
+		// The functional interfaces do not declare checked exceptions. This is normally OK.
+		// However, it is a problem when working with methods that declare checked exceptions.
 		// Both does not compile
-		// ExceptionCaseStudy.create().stream().count();	
-		// Supplier<List<String>> s = ExceptionCaseStudy::create; // DOES NOT COMPILE
+		//   ExceptionCaseStudy.create().stream().count();	
+		//   Supplier<List<String>> s = ExceptionCaseStudy::create; // DOES NOT COMPILE
 		// Two solutions:
 		Supplier<List<String>> s = () -> {
 			try {
