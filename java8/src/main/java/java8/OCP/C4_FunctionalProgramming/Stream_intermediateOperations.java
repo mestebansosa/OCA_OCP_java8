@@ -1,5 +1,6 @@
 package java8.OCP.C4_FunctionalProgramming;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -17,9 +18,7 @@ public class Stream_intermediateOperations {
 		// Solution:
 		// https://www.baeldung.com/java-stream-operated-upon-or-closed-exception
 		Supplier<Stream<String>> streamSupplierAnimals = () -> Stream.of("monkey", "gorilla", "bonobo");
-		Supplier<Stream<String>> streamSupplierWolf = () -> Stream.of("w", "o", "l", "f");
 		Supplier<Stream<Integer>> infinite = () -> Stream.iterate(1, x -> x + 1);
-
 
 		// Unlike a terminal operation, intermediate operations deal with infinite
 		// streams simply by returning an infinite stream. Since elements are produced
@@ -71,9 +70,9 @@ public class Stream_intermediateOperations {
 		
 		// It actually hangs until you kill the program or it		
 /*		Stream.generate(() -> "Elsa").filter(n -> n.length() == 4).peek(System.out::println).sorted().limit(2)
-				.forEach(System.out::println);*/		 
-		
-		// This one prints Elsa twice.
+				.forEach(System.out::println);
+*/		 		
+		// This one prints Elsa twice. See the difference?
 		Stream.generate(() -> "Elsa").filter(n -> n.length() == 4).limit(2).sorted().forEach(System.out::println);
 
 		// This one hangs as well until we kill the program.
@@ -99,6 +98,19 @@ public class Stream_intermediateOperations {
 		s.forEach(System.out::println);
 		System.out.println(s.collect(Collectors.toList()));
 		s.peek(System.out::println).count();
-		s.limit(5).forEach(System.out::println);		
+		s.limit(5).forEach(System.out::println);	
+		// Notice that most of the approaches are destructive (except peek). 
+		// This means that you cannot use the stream anymore after printing
+				
+		// Working with Advanced Stream Pipeline Concepts
+		// Linking Streams.
+		List<String> cats = new ArrayList<>();
+		cats.add("Annie");
+		cats.add("Ripley");		
+		Stream<String> catStream = cats.stream();
+		cats.add("KC");
+		System.out.println(catStream.count()); // output is 3, so both are linked
+		// Remember that streams are lazily evaluated. The stream isn’t actually created on catStream.stream()
+
 	}
 }

@@ -144,6 +144,7 @@ public class BuiltIn_FunctionalInterfaces {
 		// Predicate ex4 = String::isEmpty; // DOES NOT COMPILE, where is the type <>
 		
 		
+		// Working with Advanced Stream Pipeline Concepts
 		// Checked Exceptions and Functional Interfaces
 		// The functional interfaces do not declare checked exceptions. This is normally OK.
 		// However, it is a problem when working with methods that declare checked exceptions.

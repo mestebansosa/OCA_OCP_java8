@@ -14,15 +14,6 @@ public class OptionalType {
 
 	// Chainning Optionals
 	// A few of the intermediate operations for streams are available for Optional.
-	private void threeDigitClassic(Optional<Integer> optional) {
-		if (optional.isPresent()) { // outer if
-			Integer num = optional.get();
-			String string = "" + num;
-			if (string.length() == 3) // inner if
-				System.out.println(string);
-		}
-	}
-	// With Functional programming
 	private static void threeDigit(Optional<Integer> optional) {
 		optional.map(n -> "" + n) 
 				.filter(s -> s.length() == 3)
@@ -57,5 +48,9 @@ public class OptionalType {
 		System.out.println(opt2.orElse(Double.NaN));
 		System.out.println(opt2.orElseGet(() -> Math.random()));
 		System.out.println(opt2.orElseThrow(() -> new IllegalStateException()));
+		
+		// Working with Advanced Stream Pipeline Concepts
+		// Chainning Optionals
+		threeDigit(Optional.of(567));
 	}
 }

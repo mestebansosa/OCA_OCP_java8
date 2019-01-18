@@ -12,13 +12,17 @@ public class Stream_withPrimitives_creation {
 		// with no primitives
 		Stream<Integer> stream = Stream.of(1, 2, 3);
 		System.out.println(stream.reduce(0, (s, n) -> s + n));
+		// doing the same but converting the Stream<Integer> to an IntStream and 
+		// asked the IntStream to calculate the sum for us.
+		Stream<Integer> stream2 = Stream.of(1, 2, 3);
+		System.out.println(stream2.mapToInt(x -> x).sum());
 		
 		// with primitives
 		// IntStream: Used for the primitive types int, short, byte, and char
 		// LongStream: Used for the primitive type long
 		// DoubleStream: Used for the primitive types double and float
-		Stream<Integer> stream2 = Stream.of(1, 2, 3);
-		System.out.println(stream2.mapToInt(x -> x).sum());
+		IntStream stream3 = IntStream.of(1, 2, 3);
+		System.out.println(stream3.sum());
 		
 		// Create finite stream
 		DoubleStream empty = DoubleStream.empty();
@@ -43,9 +47,31 @@ public class Stream_withPrimitives_creation {
 		rangeClosed.forEach(System.out::println);
 		
 		// The final way to create a primitive stream is by mapping from another stream type.
+		/*
+		 Mapping methods between types of streams
+			Source			ToCreate	ToCreate		ToCreate	ToCreate
+			StreamClass		Stream		DoubleStream	IntStream	LongStream
+			--------		------		-----------		----------	---------
+			Stream 			map 		mapToDouble 	mapToInt 	mapToLong
+			DoubleStream	mapToObj 	map 			mapToInt 	mapToLong
+			IntStream 		mapToObj 	mapToDouble 	map 		mapToLong
+			LongStream 		mapToObj 	mapToDouble 	mapToInt 	map
+
+		 Function parameters when mapping between types of streams
+			Source			ToCreate		ToCreate			ToCreate			ToCreate
+			StreamClass		Stream			DoubleStream		IntStream			LongStream
+			--------		------			-----------			----------			---------
+			Stream 			Function 		ToDoubleFunction 	ToIntFunction 		ToLongFunction
+			DoubleStream	DoubleFunction 	DoubleUnaryOperator	DoubleToIntFunction DoubleToLongFunction
+			IntStream 		IntFunction 	IntToDoubleFunction IntUnaryOperator	IntToLongFunction
+			LongStream 		LongFunction 	LongToDoubleFunctio LongToIntFunction 	LongUnaryOperator
+	
+		 */
 		Stream<String> objStream = Stream.of("penguin", "fish");
-		IntStream intStream = objStream.mapToInt(s -> s.length()); // Note: it uses mapTo*() as parameter		
-		// using flatMapTo*()
+		IntStream intStream = objStream.mapToInt(s -> s.length()); // Note: it uses mapToInt(ToIntFunction)		
+
+		// You can also create a primitive stream from a Stream using 
+		//  flatMapToInt(), flatMapToDouble(), or flatMapToLong().
 		List<Integer> list = Arrays.asList(1,2,3);
 		IntStream ints = list.stream().flatMapToInt(x -> IntStream.of(x));
 		System.out.println(ints.average().getAsDouble());

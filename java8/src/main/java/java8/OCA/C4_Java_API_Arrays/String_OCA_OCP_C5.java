@@ -5,7 +5,7 @@ public class String_OCA_OCP_C5 {
     	// String. Create
     	// default value for string is null.
     	String str1 = new String("Paul"); // new object, never in string pool (or String constant pool)
-    	String str2 = new String("Paul");
+    	String str2 = new String("Paul"); // new object
     	// The operator == compares the addresses.
     	System.out.println(str1==str2); // false
     	String str3 = "Harry"; // new string and set in the string pool
@@ -18,7 +18,7 @@ public class String_OCA_OCP_C5 {
     	String boy = new String(name); // another way to create a string
     	// and with StringBuilder and StringBuffer.
 
-    	// String is inmutable. JVM reuse String objects, reduce memory overhead and best performance.
+    	// String is immutable. JVM reuse String objects, reduce memory overhead and best performance.
     	// String uses a char array to store its value: 
     	//    private final char value[]; The arrays are fixed in size. They can't grow after initialization
     	// String methods do not modify the value.
@@ -37,7 +37,7 @@ public class String_OCA_OCP_C5 {
     	System.out.println(str1.substring(1,2).trim().startsWith("o")); // chaining
     	
     	// String objects and operators.
-    	// the + operator create a new object.
+    	// the + operator create a new object. Concatenation.
     	String initializedToNull = null;
     	initializedToNull += "Pepe";
     	System.out.println(initializedToNull); // nullPepe
@@ -67,7 +67,16 @@ public class String_OCA_OCP_C5 {
     	System.out.println(sb1.substring(2, 6)); // ABBA
     	System.out.println(sb1.subSequence(2, 6)); // ABBA
     	
-    	// StringBuffer. Same as StringBuilder but all the methods are synchronized.    	
+    	// StringBuffer. Same as StringBuilder but all the methods are synchronized.  
+    	
+    	/* 
+    	 Comparing String, StringBuilder, and StringBuffer
+			Characteristic	String	StringBuilder	StringBuffer
+			Immutable?		Yes 	No 				No
+			Pooled? 		Yes 	No 				No
+			Thread-safe? 	Yes 	No 				Yes
+			CanChangeSize? 	No 		Yes 			Yes	
+    	 */
     	
     }			
 }

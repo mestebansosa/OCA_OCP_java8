@@ -16,7 +16,13 @@ import java.time.temporal.ChronoUnit;
 public class Time_OCA_OCP_C5 {
     public static void main(String[] args) {
     	System.out.println(-1.0/0);
-    	// All are Immutable and hence safe to be used in a multithreaded env.
+    	
+    	// The old - new way:
+    	/* 
+    	 Date      -  LocalDate
+    	 Calendar  -  LocalDate
+    	 */
+    	// The date and time classes are Immutable and hence safe to be used in a multithreaded env.
     	// Constructor is private, so you must use one of the factory methods.
     	// Only ZoneDateTime contains time zone.
     	
@@ -41,10 +47,10 @@ public class Time_OCA_OCP_C5 {
     	assert date3.isAfter(date1);
     	
     	// converting to another type
-    	System.out.println(date1.atTime(16, 30));
-    	System.out.println(date1.toEpochDay());
+    	System.out.println(date1.atTime(16, 30)); // LocalDateTime
+    	System.out.println(date1.toEpochDay()); // long
     	
-    	// LocalTime. HH:MM:SS.
+    	// LocalTime. HH:MM:SS:SSSS
     	LocalTime time1 = LocalTime.of(12, 12);
     	LocalTime time2 = LocalTime.of(0, 12, 6);
     	LocalTime time3 = LocalTime.of(14, 7, 10, 998564632); // nanoseconds
@@ -56,24 +62,29 @@ public class Time_OCA_OCP_C5 {
     	System.out.println(time4);
     	System.out.println(time5);
     	
-    	System.out.format("%s %s %s\n",LocalTime.MAX, LocalTime.MIN, LocalTime.NOON);
+    	System.out.format("max: %s %s %s\n",LocalTime.MAX, LocalTime.MIN, LocalTime.NOON);
     	System.out.format("%s %s\n", time5.getHour(), time5.getNano());
 
     	// converting to another type
     	System.out.println(time5.atDate(date3));
+    	// System.out.println(time5.toEpochDay()); // LocalTome has not epoch method
 
     	// LocalDateTime. YYYY-MM-DDTHH:MM:SS:SSSS.
+    	// Java uses T to separate the date and time when converting LocalDateTime to a String.
     	// Both functionalities (without the time zone)
     	LocalDateTime dateTime = LocalDateTime.parse("2050-06-05T15:08:23");
     	LocalDateTime dateTime2 = LocalDateTime.now();
     	System.out.println(dateTime);
     	System.out.println(dateTime2);
-    	
-    	// Period. PnYnMnD or PnW. It is a day or more of time. P is mandatory 
+    	// converting to another type
+    	System.out.println(dateTime2.toEpochSecond(null));
+   	
+    	// Period. 
+    	// PnYnMnD or PnW. It is a day or more of time. P is mandatory 
     	Period period1 = Period.of(1, 2, 7);
     	Period period2 = Period.ofYears(2);
     	System.out.println(dateTime + "---" + dateTime.plus(period2)); // Easier use for other types
-    	System.out.println(period1);
+    	System.out.println("period1:" + period1);
     	System.out.println("period2:" + period2);
     	System.out.println(Period.ofDays(-15));
     	System.out.println(Period.ofDays(35));
@@ -92,9 +103,9 @@ public class Time_OCA_OCP_C5 {
     	
     	// Duration, which is intended for smaller units of time. 
     	// For Duration, you can specify the number of days, hours, minutes, seconds, or nanoseconds.
-    	// PTnHnMnS. PT is mandatory.
+    	// PTnHnMnS. PT (period of time) is mandatory.
     	// Period and Duration are not equivalent.
-    	// With LocalDate you can use Period but Not duration. LocalTime use Duration but not Period.
+    	// LocalDate use Period but Not duration. LocalTime use Duration but not Period.
     	Duration.ofSeconds(3600); // to mean one hour.
     	// Use TemporalUnit interface. ChronoUnit is one implementation.
     	Duration daily = Duration.of(1, ChronoUnit.DAYS);
@@ -104,6 +115,8 @@ public class Time_OCA_OCP_C5 {
     	Duration everyTenSeconds = Duration.of(10, ChronoUnit.SECONDS);
     	Duration everyMilli = Duration.of(1, ChronoUnit.MILLIS);
     	Duration everyNano = Duration.of(1, ChronoUnit.NANOS);
+		System.out.println(daily + " " + halfDay + " " + hourly + " " + everyMinute + " " + everyTenSeconds + " "
+				+ everyMilli + " " + everyNano);
     	
     	LocalTime one = LocalTime.of(5, 15);
     	LocalTime two = LocalTime.of(6, 30);
@@ -115,7 +128,8 @@ public class Time_OCA_OCP_C5 {
     	Duration duration = Duration.ofHours(6);
     	System.out.println(dateTime.plus(duration));
     	
-    	// Instant. Represents a specific moment in time in the GMT time zone.
+    	// Instant. 
+    	// Represents a specific moment in time in the GMT time zone.
     	Instant now = Instant.now();
     	Instant later = Instant.now();
     	System.out.println(Duration.between(now, later).toNanos());
@@ -127,6 +141,8 @@ public class Time_OCA_OCP_C5 {
     	Instant instant = zonedDateTime.toInstant(); // 2015–05–25T15:55:00Z
     	System.out.println(zonedDateTime); // 2015–05–25T11:55–04:00[US/Eastern]
     	System.out.println(instant); // 2015–05–25T15:55:00Z
+    	// other way to create an instance
+    	instant = Instant.ofEpochSecond(instant.getEpochSecond());
     	
     	// DateTimeFormatter
     	// By calling a static ofXXX method
@@ -160,9 +176,26 @@ public class Time_OCA_OCP_C5 {
     	
     	// Accounting for Daylight Savings Time
 		// The exam will let you know if a date/time mentioned falls on a weekend when
-		// the clocks are scheduled to be changed.
+		//   the clocks are scheduled to be changed.
     	// March changeover:    1:00am-1:59am - 3:00am-4:00am
     	// November changeover: 1:00am-1:59am - 1:00am-1:59am - 2:00am-3:00am
+    	LocalDate dateMarch = LocalDate.of(2016, Month.MARCH, 13);
+    	LocalTime timeMarch = LocalTime.of(1, 30);
+    	ZoneId zoneMarch = ZoneId.of("US/Eastern");
+    	ZonedDateTime dateTimeMarch = ZonedDateTime.of(dateMarch, timeMarch, zoneMarch);
+    	System.out.println(dateTimeMarch); // 2016–03–13T01:30–05:00[US/Eastern]
+    	dateTimeMarch = dateTimeMarch.plusHours(1);
+    	System.out.println(dateTimeMarch); // 2016–03–13T03:30–04:00[US/Eastern]
+    	
+    	LocalDate dateNov = LocalDate.of(2016, Month.NOVEMBER, 6);
+    	LocalTime timeNov = LocalTime.of(1, 30);
+    	ZoneId zoneNov = ZoneId.of("US/Eastern");
+    	ZonedDateTime dateTimeNov = ZonedDateTime.of(dateNov, timeNov, zoneNov);
+    	System.out.println(dateTimeNov); // 2016–11–06T01:30–04:00[US/Eastern]
+    	dateTimeNov = dateTimeNov.plusHours(1);
+    	System.out.println(dateTimeNov); // 2016–11–06T01:30–05:00[US/Eastern]
+    	dateTimeNov = dateTimeNov.plusHours(1);
+    	System.out.println(dateTimeNov); // 2016–11–06T02:30–05:00[US/Eastern]
     	
     }			
 }

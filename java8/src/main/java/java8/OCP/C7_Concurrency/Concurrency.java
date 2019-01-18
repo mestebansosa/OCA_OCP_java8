@@ -1,4 +1,4 @@
-package java8.OCP.C4_FunctionalProgramming;
+package java8.OCP.C7_Concurrency;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;

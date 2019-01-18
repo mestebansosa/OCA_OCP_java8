@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.Optional;
 import java.util.OptionalDouble;
+import java.util.OptionalLong;
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleBinaryOperator;
 import java.util.function.DoubleConsumer;
@@ -27,22 +29,37 @@ import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 public class Stream_withPrimitives_operations {
+	
 	public static void main(String[] args) {
 
-		// Using Primitive Optional with Primitive Streams
-		// OptionalDouble, OptionalInt and OptionalLong
+		/*
+		 Optional types for primitives
+								OptionalDouble	OptionalInt		OptionalLong
+								-------------	----------		----------
+		Getting as a primitive	getAsDouble()	getAsInt()		getAsLong()
+		
+		orElseGet()
+		parameter type			DoubleSupplier	IntSupplier		LongSupplier
+		
+		Return type of max() 	OptionalDouble 	OptionalInt 	OptionalLong
+		Return type of sum() 	double 			int 			long
+		Return type of avg() 	OptionalDouble 	OptionalDouble 	OptionalDouble
+		 */
 		List<Integer> list = Arrays.asList(1,2,3);
 		IntStream ints = list.stream().flatMapToInt(x -> IntStream.of(x));
 		OptionalDouble avg = ints.average();
 		System.out.println(avg.getAsDouble());
+		System.out.println(avg.orElseGet(() -> Double.NaN));
 		
 		// min, max, avg, count and sum
 		LongStream longs = LongStream.of(5, 10);
+		OptionalLong max = longs.max();
+		longs = LongStream.of(5, 10);
 		long sum = longs.sum();
 		System.out.println(sum); // 15
 		
 		DoubleStream doubles = DoubleStream.generate(() -> Math.PI).limit(10);
-		OptionalDouble min = doubles.min(); // runs infinitely
+		OptionalDouble min = doubles.min(); // runs infinitely, but not with limit(10)
 		System.out.println(min.getAsDouble()); // 15
 		
 		// Summarizing Statistics.
@@ -51,6 +68,7 @@ public class Stream_withPrimitives_operations {
 		IntSummaryStatistics stats = ints2.summaryStatistics();
 		if (stats.getCount() == 0) throw new RuntimeException();
 		System.out.println(stats.getMax() - stats.getMin());
+		System.out.println(stats);
 		
 		// Functional Interfaces for Primitives
 		// BooleanSupplier is a separate type.
@@ -102,17 +120,7 @@ public class Stream_withPrimitives_operations {
 		ToIntFunction<String> tif = s -> Integer.valueOf(s);
 		tdf.applyAsDouble("567");
 		tdbf.applyAsDouble("567",567);
-		tif.applyAsInt("567");
-		
-		// Linking Streams.
-		List<String> cats = new ArrayList<>();
-		cats.add("Annie");
-		cats.add("Ripley");		
-		Stream<String> stream = cats.stream();
-		cats.add("KC");
-		System.out.println(stream.count()); // output is 3, so both are linked
-		
-
+		tif.applyAsInt("567");		
 
 	}
 }
