@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -41,11 +42,12 @@ public class Exceptions_OCA_OCP_C6 {
 	public static String tryFinallyWithTwoReturns() {
 		// it will be executed the finally return.
 		// a try-finally (no catch) is legal, but won't suffice if code in the try throws a checkedException.
+		System.out.println("tryFinallyWithTwoReturns");
 		try {
-			System.out.println("tryFinallyWithTwoReturns Executing try block");
+			System.out.println("Executing try block");
 			return "Return from try block";
 		} finally {
-			System.out.println("tryFinallyWithTwoReturns Executing finally block");
+			System.out.println("Executing finally block");
 			return "Return from finally block";
 		}
 	}
@@ -80,7 +82,7 @@ public class Exceptions_OCA_OCP_C6 {
     	System.out.println(-77.0/0); // -Infinity
     	System.out.println(0.0/0); // NaN
     	//       NumberFormatException
-    	System.out.println(Integer.parseInt("123")); // -123
+    	System.out.println(Integer.parseInt("123")); // 123
     	System.out.println(Integer.parseInt("-123")); // -123
     	System.out.println(Integer.parseInt("+123")); // 123
     	// System.out.println(Integer.parseInt("123_45")); // NumberFormatException
@@ -94,7 +96,8 @@ public class Exceptions_OCA_OCP_C6 {
 		//    Checked exceptions must follow the handle or declare rule where they are 
     	//    either caught or thrown to the caller. 
     	//    It is part of the API and is well documented.
-    	//    Examples: FileNotFoundException, IOException
+    	//    Examples: FileNotFoundException, IOException, ParseException, NotSerializableException, SQLException
+
     	
     	// error exception. Can be referred as unchecked exception
     	//    Object.Throwable.Error
@@ -114,7 +117,7 @@ public class Exceptions_OCA_OCP_C6 {
     	// only two scenarios not execute finally: System.exit and Fatal Errors, a crash.
     	// multiple catch blocks but only one finally block
     	// order in catch blocks. Specific exception to mayor in hierarchy.
-    	tryFinallyWithTwoReturns(); // prints: Executing try block, Executing finally block and return from finally block
+    	System.out.println(tryFinallyWithTwoReturns()); // prints: Executing try block, Executing finally block and return from finally block
     	// tryFinallyExample2(); // prints: Executing finally block and the Exception stack     	
 
     	// create checked exceptions.
@@ -140,7 +143,7 @@ public class Exceptions_OCA_OCP_C6 {
 			LocalDate date = LocalDate.parse(text);
 			System.out.println(date);
 		} catch (DateTimeParseException | IOException e) {
-			System.out.println(e.getMessage());
+			System.out.println("Exception in : " + e.getLocalizedMessage());
 			// throw new RuntimeException(e);
 		}
 		// syntax

@@ -13,6 +13,7 @@ import java.util.function.Supplier;
 
 public class Executor_Services {
 	// Executor methods are:
+	
 	/*
 	   newSingleThreadExecutor(), returns ExecutorService
 	   newSingleThreadScheduledExecutor(), returns ScheduledExecutorService
@@ -25,15 +26,26 @@ public class Executor_Services {
 		If the pool runs out of available threads, the task will be queued by the thread executor 
 		and wait to be completed.
 		
-		newCachedThreadPool() executes many short-lived asynchronous tasks. 
-		   For long-lived processes, usage of this executor is strongly discouraged.
-		newFixedThreadPool(1) == newSingleThreadExecutor()
+		The newFixedThreadPool() takes a number of threads and allocates them all upon creation. 
+		As long as our number of tasks is less than our number of threads, all tasks will be executed 
+		concurrently. If at any point the number of tasks exceeds the number of threads in the pool, 
+		they will wait.
+
+		The newCachedThreadPool() will create a thread pool of unbounded size, allocating a new thread
+		any time one is required or all existing threads are busy. This is commonly used for pools that 
+		require executing many short-lived asynchronous tasks. 
+		   
+		For long-lived processes, usage of this executor is strongly discouraged.
+		   
+		newFixedThreadPool(1) is equals to newSingleThreadExecutor()
 		
 		Choosing poolSize: Runtime.getRuntime().availableProcessors()
 	 */
-	// ExecutorService is an interface. The Concurrency API includes the Executors factory class
+	
+	// ExecutorService is an interface. 
+	// The Executors factory class that can be used to create instance of the ExecutorService object.
     // You can create a static instance of a thread executor and have all processes share it.
-	static ExecutorService service = null;
+	static ExecutorService service = Executors.newSingleThreadExecutor();
 	static ScheduledExecutorService scheduledService = null;
 	static ExecutorService cachedThreadPool = null;
 	static ExecutorService fixedThreadPool = null;
@@ -46,16 +58,18 @@ public class Executor_Services {
 	
 	public static void main(String[] args) {
 		// the newSingleThreadExecutor() method, which is the simplest ExecutorService
-		// that we could create. The order is guaranteed as it is only one thread.
+		//   that we could create. The order is guaranteed as it is only one thread.
+		// the singleThreadExecutor will queue the tasks and wait until the previous task completes 
+		//   before executing the next task
 		try {
 			service = Executors.newSingleThreadExecutor();
 			System.out.println("begin");
-			service.submit(() -> System.out.println("Printing zoo inventory"));
+			service.submit(() -> System.out.println("newSingleThreadExecutor"));
 			service.execute(() -> {
 				for (int i = 0; i < 3; i++)
 					System.out.println("Printing record: " + i);
 			});
-			service.execute(() -> System.out.println("Printing zoo inventory"));
+			service.execute(() -> System.out.println("newSingleThreadExecutor"));
 			System.out.println("end");
 		} finally {
 			if (service != null)
@@ -79,16 +93,20 @@ public class Executor_Services {
          
          ExecutorService interface does not implement AutoCloseable, so cannot use a try-with-resources.
          Use finally instead.
+         
          You can create a static instance of a thread executor and have all processes share it.
 		 */
 		
-		// Submitting Tasks. Recommended submit over execute
+		// Submitting Tasks. Recommended submit over execute, even if you don't store the Future reference.
 		/*
 		  void execute(Runnable command). 
 		     Executes a Runnable task at some point in the future. Fire and forget.
 		  Future<?> submit(Runnable task)
-		     Executes a Callable task at some point in the future and returns a Future representing 
-		     the pending results of the task
+		     Executes a Runnable task at some point in the future and returns a Future object 
+		     representing the task.
+		  <T> Future<T> submit(Callable<T> task)
+		     Executes a Callable task at some point in the future and returns a Future object 
+		     representing the pending results of the task.
 		  <T> List<Future<T>> invokeAll(Collection<? extends Callable<T>> tasks) throws InterruptedException
 			 Executes the given tasks, synchronously returning the results of all tasks as a Collection of 
 			 Future objects, in the same order they were in the original collection
@@ -98,18 +116,23 @@ public class Executor_Services {
 		 */
 		/* 
 		  invokeAll and invokeAny are synchronous, so will wait until tasks (all or any) are executed.
-		  There are overloaded method with TimeUnit parameter to do not wailt too much.
+		  There are overloaded method with TimeUnit parameter to do not wait too much.
 		 */
 		
 		// Waiting for Results with Future<V> object over a Runnable		
 		try {
 			service = Executors.newSingleThreadExecutor();
 			System.out.println("begin");
-			Future<?> future = service.submit(() -> System.out.println("Printing zoo inventory"));
+			
+			Future<?> future = service.submit(() -> System.out.println("newSingleThreadExecutor. waiting results"));
 			// As Future<V> is a generic class, the type V is determined by the return type of the Runnable. 
 			// Since the return type of Runnable.run() is void, the get() method always returns null.
-			future.get();
-			future.get(1, TimeUnit.SECONDS);
+			System.out.println(future.get()); // retrieves the result of a task, waiting endlessly if it is not yet available.
+			
+			// notice the submit parameter is Callable
+			future = service.submit(() -> {System.out.println("newSingleThreadExecutor. waiting results"); return 10;});
+			System.out.println(future.get(1, TimeUnit.SECONDS)); // retrieves the result of a task, waiting the specified time.
+			
 			System.out.println("cancel: " + future.cancel(true));
 			System.out.println("done: " + future.isDone());
 			System.out.println("cancelled: " + future.isCancelled());
@@ -117,17 +140,12 @@ public class Executor_Services {
 				for (int i = 0; i < 3; i++)
 					System.out.println("Printing record: " + i);
 			});
-			service.execute(() -> System.out.println("Printing zoo inventory"));
+			service.execute(() -> System.out.println("newSingleThreadExecutor. waiting results"));
 			System.out.println("end");
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		} catch (TimeoutException e) {
+		} catch (InterruptedException | ExecutionException | TimeoutException e) {
 			e.printStackTrace();
 		} finally {
-			if (service != null)
-				service.shutdown();
+			if (service != null) service.shutdown();
 		}
 		
 		// Callable functional interface
@@ -148,14 +166,13 @@ public class Executor_Services {
 			service.submit(() -> {Thread.sleep(1000); return null;});
 			// service.submit(() -> {Thread.sleep(1000);});  // DOES NOT COMPILE, 
 			// Runnable does not support checked exceptions.
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
+		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		} finally {
 			if(service != null) service.shutdown();
 		}
-		// Waiting for All Tasks to Finish
+		
+		// Waiting for All Tasks to Finish with awaitTermination
 		if (service != null) {
 			try {
 				service.awaitTermination(1, TimeUnit.MINUTES);
@@ -181,6 +198,7 @@ public class Executor_Services {
 		 scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit)
 			Creates and executes a Runnable task after the given initial delay, 
 			creating a new task every period value that passes.
+			closest built-in java equivalent to Unix cron
 		 scheduleAtFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit)
 			Creates and executes a Runnable task after the given initial delay and 
 			subsequently with the given delay between the termination of one execution 
@@ -197,7 +215,38 @@ public class Executor_Services {
 			Future<?> result4 = scheduledService.scheduleWithFixedDelay(runnableTask, 10, 1, TimeUnit.SECONDS);
 		} catch (InterruptedException | ExecutionException e) {
 		} finally {
-			//if(scheduledService != null) scheduledService.shutdown();
+			// if(scheduledService != null) scheduledService.shutdown();
 		}
+		
+		// Concurrency with pools
+		// A thread pool is a group of pre-instantiated reusable threads that are
+		// available to perform a set of arbitrary tasks
+		int availableProcessors = Runtime.getRuntime().availableProcessors();
+		System.out.println("availableProcessors: " + availableProcessors);
+		
+		try {
+			cachedThreadPool = Executors.newCachedThreadPool();
+			cachedThreadPool.execute(() -> System.out.println("cachedThreadPool"));
+			cachedThreadPool.execute(() -> {
+				for (int i = 0; i < 3; i++)
+					System.out.println("ExecutorService: " + i);
+			});
+		} finally {
+			if (cachedThreadPool != null)
+				cachedThreadPool.shutdown();
+		}
+	
+		try {
+			fixedThreadPool = Executors.newFixedThreadPool(availableProcessors);
+			fixedThreadPool.execute(() -> System.out.println("fixedThreadPool"));
+			fixedThreadPool.execute(() -> {
+				for (int i = 0; i < 3; i++)
+					System.out.println("ExecutorService: " + i);
+			});
+		} finally {
+			if (fixedThreadPool != null)
+				fixedThreadPool.shutdown();
+		}
+
 	}
 }

@@ -68,8 +68,9 @@ public class BuiltIn_FunctionalInterfaces {
 		BinaryOperator<T>    2 (T, T)   T          apply
 		
 		Runnable             0          void       run
+		Callable<T>          0          T          call        throws Exception
 		*/
-		
+				
 		// A Supplier is used when you want to generate or supply (return) values
 		// without taking any input.
 		Supplier<LocalDate> s1 = LocalDate::now;

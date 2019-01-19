@@ -127,7 +127,6 @@ public class I18n_l10n {
 			System.out.println(nf.parse(two)); // -2.5165
 			System.out.println(nf.parse(three));// throws ParseException
 		} catch (ParseException e) {
-			e.printStackTrace();
 		} 
 	}   	
 }

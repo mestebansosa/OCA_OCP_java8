@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.time.Period;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -77,7 +78,7 @@ public class Time_OCA_OCP_C5 {
     	System.out.println(dateTime);
     	System.out.println(dateTime2);
     	// converting to another type
-    	System.out.println(dateTime2.toEpochSecond(null));
+    	System.out.println(dateTime2.toEpochSecond(ZoneOffset.UTC));
    	
     	// Period. 
     	// PnYnMnD or PnW. It is a day or more of time. P is mandatory 
@@ -145,7 +146,8 @@ public class Time_OCA_OCP_C5 {
     	instant = Instant.ofEpochSecond(instant.getEpochSecond());
     	
     	// DateTimeFormatter
-    	// By calling a static ofXXX method
+    	// DateTimeFormatter can be used to format any type of date and/or time object.
+    	// By calling a static ofLocalizedXXX method
     	DateTimeFormatter formatter1 = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
     	DateTimeFormatter formatter2 = DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM);
     	DateTimeFormatter formatter3 = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.MEDIUM);
@@ -154,6 +156,9 @@ public class Time_OCA_OCP_C5 {
     	// By using the static method of Pattern
     	DateTimeFormatter formatter5 = DateTimeFormatter.ofPattern("2018 12 12");
     	
+    	System.out.println(FormatStyle.SHORT + " " + formatter1.format(dateTime));
+    	System.out.println(FormatStyle.MEDIUM + " " + formatter2.format(dateTime));
+    	System.out.println(formatter3.format(dateTime));
     	System.out.println(formatter4.format(dateTime));
     	System.out.println(dateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));   
     	System.out.println(dateTime.format(formatter3));   

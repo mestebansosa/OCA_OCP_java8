@@ -1,5 +1,12 @@
 package java8.OCP.C7_Concurrency;
 
+class PrintData implements Runnable {
+	public void run() {
+		for (int i = 0; i < 3; i++)
+			System.out.println("Printing record: " + i);
+	}
+}
+
 public class Threads extends Thread {
 	/*
 	 A THREAD is the smallest unit of execution that can be scheduled by the operating system. 
@@ -13,13 +20,13 @@ public class Threads extends Thread {
 	 */
 	/*
 	Java is multi-threaded:
-	  - System-Defined Threads: GC thread. If these system threads fins a probrelm they throw a Java Error.
+	  - System-Defined Threads: GC thread. If these system threads find a problem they throw a Java Error.
 	  - User-Defined Threads: one created by the developer that executes tasks.
 	  - Daemon Threads. If the JVM detects only daemon threads then the JVM will shut down. 
 	      Daemon threads can be system or user threads. 
 	*/
 	
-	// Thread concurrency
+	// Thread concurrency, thread-scheduler
 	// SSOO have a thread-scheduler with a round-robin schedule to give the CPU and number of cycles
 	//    to be executed by the thread. 
 	// A context switch is the process of storing a thread’s current state and later restoring the 
@@ -48,10 +55,23 @@ public class Threads extends Thread {
 	public static void main(String[] args) {
 		// create a thread and execute the task.
 		// Two ways: 
-		// extends Thread 
-		//  (new Threads()).start(); // less common
+
+		// extends Thread. // less common
+		(new Thread(new Threads())).start();  
+				// Causes this thread to begin execution; the Java Virtual Machine calls the run method of this thread
 		// implements Runnable
-		(new Thread(new Threads())).start();
+		(new Thread(new PrintData())).start();
+		// with lambdas
+		new Thread(() -> {
+			for (int i = 0; i < 3; i++)
+				System.out.println("Printing record with lambda: " + i);
+		}).start();
+		// with lambdas 2nd form
+		Runnable runnableLambda = () -> {
+			for (int i = 0; i < 3; i++)
+				System.out.println("Printing record with lambda2: " + i);
+		};
+		new Thread(runnableLambda).start();
 		/*
 		 diff between extending the Thread class and implementing Runnable:
          - If you need to define your own Thread rules upon which multiple tasks will rely, 
