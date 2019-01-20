@@ -53,15 +53,17 @@ public class Threads extends Thread {
 	}
 	
 	public static void main(String[] args) {
-		// create a thread and execute the task.
-		// Two ways: 
-
+		// order guaranteed, but not concurrency. The JVM Scheduler is not involved.
+		(new Thread(new PrintData())).run();
+		
+		// create a thread and execute the task using JVM Scheduler. Order is not guaranteed.
+		// Two ways: (extend Thread or implement Runnable)
 		// extends Thread. // less common
 		(new Thread(new Threads())).start();  
-				// Causes this thread to begin execution; the Java Virtual Machine calls the run method of this thread
+				// Causes this thread to begin execution; the JVM calls the run() method of this thread
 		// implements Runnable
 		(new Thread(new PrintData())).start();
-		// with lambdas
+		// with lambdas using Runnable
 		new Thread(() -> {
 			for (int i = 0; i < 3; i++)
 				System.out.println("Printing record with lambda: " + i);

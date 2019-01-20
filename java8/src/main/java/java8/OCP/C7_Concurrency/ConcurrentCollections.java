@@ -25,11 +25,11 @@ public class ConcurrentCollections {
 	// It also prevents us from introducing mistakes in own custom implementation. 
 	// The concurrent collections often include performance enhancements.
 	// ensuring that concurrent threads do not throw ConcurrentModificationException
-	
-	// Understanding Memory Consistency Errors
-	
+		
 	public static void main(String[] args) {
 		// Understanding Memory consistency error.
+		// A memory consistency error occurs when two threads have inconsistent views of
+		// what should be the same data. Conceptually,
 		// When two threads try to modify the same non-concurrent collection, the JVM may
 		// throw a ConcurrentModificationException at runtime.
 		Map<String, Object> foodData0 = new HashMap<>();
@@ -49,6 +49,7 @@ public class ConcurrentCollections {
 			foodData.remove(key); 
 		
 		// Concurrent collection classes.
+		
 		// ConcurrentHashMap
 		// ConcurrentLinkedQueue
 		// ConcurrentLinkedDeque
@@ -63,11 +64,12 @@ public class ConcurrentCollections {
 		System.out.println(deque.peek());
 		System.out.println(deque.pop());
 		
+		// Understanding Blocking Queues
 		// LinkedBlockingQueue. inherits all methods from Queue, and add waiting methods.
 		// BlockingQueue methods
 		//   offer(E e, long timeout, TimeUnit unit)
 		//   poll(long timeout, TimeUnit unit)
-		// Implements both Queue anf BlockingQueue
+		// Implements both Queue and BlockingQueue
 		try {
 			BlockingQueue<Integer> blockingQueue = new LinkedBlockingQueue<>();
 			blockingQueue.offer(39);
@@ -78,12 +80,12 @@ public class ConcurrentCollections {
 			// Handle interruption
 		}		
 		
-		// LinkedBlockingDeque
+		// LinkedBlockingDeque (Deque means: double ended queue)
 		// BlockingDeque methods
-		//   offerFirst(E e, long timeout, TimeUnit unit)
-		//   offerLast(E e, long timeout, TimeUnit unit)
-		//   pollFirst(long timeout, TimeUnit unit)
-		//   pollLast(long timeout, TimeUnit unit)
+		//   offerFirst(E e, long timeout, TimeUnit unit)  add item to the head of the queue.
+		//   offerLast(E e, long timeout, TimeUnit unit)   add item to the tail of the queue.
+		//   pollFirst(long timeout, TimeUnit unit)  retrieves and removes item from the head.
+		//   pollLast(long timeout, TimeUnit unit)   retrieves and removes item from the tail.
 		try {
 			BlockingDeque<Integer> blockingDeque = new LinkedBlockingDeque<>();
 			blockingDeque.offer(91);
@@ -106,7 +108,7 @@ public class ConcurrentCollections {
 		// CopyOnWriteArrayList
 		// CopyOnWriteArraySet
 		// These classes copy all of their elements to a new underlying structure
-		// anytime an element is added, modifi ed, or removed from the collection
+		// any time an element is added, modified, or removed from the collection
 		List<Integer> list = new CopyOnWriteArrayList<>(Arrays.asList(4, 3, 52));
 		for (Integer item : list) {
 			System.out.print(item + " ");
@@ -119,16 +121,20 @@ public class ConcurrentCollections {
 			System.out.print(item + " ");
 		}
 
+		System.out.println();
 		// Obtaining Synchronized Collections
-		// synchronizedCollection, synchronized(List|Map|Set|NavigableMap|NavigableSet|SortedMap|SortedSet)
 		// methods for obtaining synchronized versions of existing non-concurrent collection objects.
-		List<Integer> list2 = Collections.synchronizedList(new ArrayList<>(Arrays.asList(4, 3, 52)));
-		synchronized (list) {
-			for (int data : list)
+		// synchronized(Collection|List|Map|Set|NavigableMap|NavigableSet|SortedMap|SortedSet)
+		List<Integer> synchronizedList = Collections.synchronizedList(new ArrayList<>(Arrays.asList(4, 3, 52)));
+		synchronized (synchronizedList) {
+			for (int data : synchronizedList)
 				System.out.print(data + " ");
 		}
 		// Therefore, it is imperative that you use a synchronization block if you need
-		// to iterate over any of the returned collections in
+		// to iterate over any of the returned collections.
+		
+		// Unlike the concurrent collections, the synchronized collections also throw an exception
+		// if they are modified within an iterator by a single thread
 				
 	}
 	

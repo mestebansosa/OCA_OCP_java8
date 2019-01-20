@@ -53,6 +53,8 @@ public class BuiltIn_FunctionalInterfaces {
 	}
 	
 	public static void main(String[] args) {
+    	{System.out.println("Initializer block. Runs before the constructor.");}
+
 		/* 
 		Common functional interfaces
 		FunctionalInterfaces Parameters ReturnType SingleAbstractMethod

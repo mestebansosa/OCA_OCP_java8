@@ -36,10 +36,8 @@ public class ParallelStreams {
 		Supplier<Stream<Integer>> serialStreamIntegers = () -> Arrays.asList(1, 2, 3, 4, 5, 6).stream();
 		Supplier<Stream<Integer>> parallelStreamIntegers = () -> Arrays.asList(1, 2, 3, 4, 5, 6).parallelStream();
 		
-
 		// Creating Parallel Streams
-		// - parallel(), You just call it on an existing stream. It is an intermediate
-		// operation.
+		// - parallel(), You just call it on an existing stream. It is an intermediate operation.
 		Stream<Integer> serialStream = Arrays.asList(1, 2, 3, 4, 5, 6).stream();
 		Stream<Integer> parallelStream = serialStream.parallel();
 
@@ -53,10 +51,10 @@ public class ParallelStreams {
 		// submitting multiple Runnable lambda expressions to a pooled thread executor
 		parallelStreamIntegers.get().forEach(s -> System.out.print(s + " ")); // disorder
 		// forEachOrder() forces order (cost of performance) in both, serial and parallel 
-		parallelStreamIntegers.get().forEachOrdered(s -> System.out.print(s + " ")); // order
+		parallelStreamIntegers.get().forEachOrdered(s -> System.out.print(s + " ")); // ordered
 		System.out.println();
 
-		// Example of serial and parallel
+		// Using ParallelStreams: example of serial and parallel
 		ParallelStreams calculator = new ParallelStreams();
 		// Define the data
 		List<Integer> data = new ArrayList<Integer>();
@@ -72,11 +70,13 @@ public class ParallelStreams {
 		time = (System.currentTimeMillis() - start)/1000.0;
 		System.out.println("\nTasks completed in parallel: "+time+" seconds");
 		
-		// Stateful Operations.
+		// When using streams, you should avoid any lambda expressions that can produce side effects.
+		
+		// Avoiding Stateful Operations.
 		// It strongly recommended avoiding Stateful Operations when using Parallel Streams. 
 		// A stateful lambda expression is one whose result depends on any state that
 		// might change during the execution of a pipeline.
-		// Anytime you are working with a collection with a parallel stream, it is
+		// Any time you are working with a collection with a parallel stream, it is
 		// recommended that you us a concurrent collection.
 		List<Integer> data2 = Collections.synchronizedList(new ArrayList<>());
 		parallelStreamIntegers.get()
@@ -90,10 +90,11 @@ public class ParallelStreams {
 		// Processing Parallel Reductions
 		// Performing Order-Based Tasks
 		System.out.println();
-		System.out.println(serialStreamIntegers.get().findAny().get()); // Consistenly outpus 1
+		System.out.println(serialStreamIntegers.get().findAny().get()); // Consistently outputs 1
 		System.out.println(parallelStreamIntegers.get().findAny().get()); // Any value
 		// calling skip(5).limit(2).findFirst() will return the same result on ordered serial and parallel.
 		
+		// Creating unordered Streams
 		serialStreamIntegers.get().unordered();
 		// This method does not actually reorder the elements; it just tells the JVM that if an
 		// order-based stream operation is applied, the order can be ignored

@@ -80,7 +80,7 @@ public class ConcurrentProcesses {
 		ExecutorService service = null;
 		try {
 			service = Executors.newFixedThreadPool(4);
-			ConcurrentProcesses manager = new ConcurrentProcesses();
+			ConcurrentProcesses manager = new ConcurrentProcesses();  // this class
 			CyclicBarrier c1 = new CyclicBarrier(4);
 			CyclicBarrier c2 = new CyclicBarrier(4, () -> System.out.println("*** Pen Cleaned!"));
 			for (int i = 0; i < 4; i++)
@@ -94,14 +94,14 @@ public class ConcurrentProcesses {
 		// When a task gets too complicated, we can split the task into multiple other tasks.
 		// The fork/join framework relies on the concept of recursion to solve complex tasks.
 		// Applying the fork/join framework requires us to perform three steps:
-		// 1.- Create a ForkJoinTask (the most complex. Requires defining the recursive process.
+		// 1.- Create a ForkJoinTask (the most complex). Requires defining the recursive process.
 		//     RecursiveAction abstract class. void compute()
 		//     RecursiveTask<T> abstract class. T compute()
 				
 		// 2.- Create the ForkJoinPool.
 		// 3.- Start the ForkJoinTask.
 		Double[] weights = new Double[10];
-		ForkJoinTask<?> task = new WeighAnimalAction(weights,0,weights.length);
+		ForkJoinTask<?> task = new WeighAnimalAction(weights,0,weights.length); // RecursiveAction
 		ForkJoinPool pool = new ForkJoinPool();
 		pool.invoke(task);
 		System.out.println();
@@ -109,6 +109,12 @@ public class ConcurrentProcesses {
 		Arrays.asList(weights).stream().forEach(
 		d -> System.out.print(d.intValue()+" "));
 		
-		FALTA RecursiveTasks
+		// RecursiveTasks
+		// TODO
+		
+		// Identifying Fork/Join Issues
+		// TODO
+		
+		
 	}
 }
