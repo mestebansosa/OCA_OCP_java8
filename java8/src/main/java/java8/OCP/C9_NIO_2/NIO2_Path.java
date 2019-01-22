@@ -14,7 +14,7 @@ import java.nio.file.ProviderNotFoundException;
 public class NIO2_Path {
 	// TODO add this in Factory pattern.
 	// General:
-	// objects. Helper or utility classes are similar to factory classes in that
+	// Helper or utility classes are similar to factory classes in that
 	// they are often composed primarily of static methods that operate on a
 	// particular class.
 	// They differ in that helper classes are focused on manipulating or creating
@@ -62,11 +62,11 @@ public class NIO2_Path {
 		} catch (FileSystemNotFoundException f) {
 		}
 		
-		// FileSystem Object. java.nio.file.FileSystem method getPath().
+		// FileSystems.getPath().
 		path1 = FileSystems.getDefault().getPath("pandas/cuddly.png");
 		path2 = FileSystems.getDefault().getPath("c:","zooinfo","November","employees.txt");
 		path3 = FileSystems.getDefault().getPath("/home/zoodirector");
-		// FileSystems factory class does give us the ability to connect to a remote file system
+		// FileSystems.getFileSystem() to connect to a remote file system
 		try {
 			FileSystem fileSystem = FileSystems.getFileSystem(new URI("http://www.selikoff.net"));
 			Path path = fileSystem.getPath("duck.txt");
@@ -84,6 +84,7 @@ public class NIO2_Path {
 		
 		// Providing Optional Arguments
 		// NOFOLLOW_LINKS, FOLLOW_LINKS, COPY_ATTRIBUTES, REPLACE_EXISTING, ATOMIC_MOVE
+
 		// Using Path Objects
 		// Viewing the Path with toString(), getNameCount(), and getName()
 		Path path = Paths.get("/");
@@ -107,15 +108,15 @@ public class NIO2_Path {
 		// Checking Path Type with isAbsolute() and toAbsolutePath()
 		// Keep in mind that if the Path object already represents an absolute path.
 		path = Paths.get("C:\\birds\\egret.txt");
-		System.out.println("Path1 is Absolute? "+path.isAbsolute());
-		System.out.println("Absolute Path1: "+path.toAbsolutePath());
+		System.out.println("Path1 is Absolute? " + path.isAbsolute());
+		System.out.println("Absolute Path1: " + path.toAbsolutePath());
 		path = Paths.get("birds/condor.txt");
-		System.out.println("Path2 is Absolute? "+path.isAbsolute());
-		System.out.println("Absolute Path2 "+path.toAbsolutePath());
+		System.out.println("Path2 is Absolute? " + path.isAbsolute());
+		System.out.println("Absolute Path2 " + path.toAbsolutePath());
 		
 		// Creating a New Path with subpath()
 		path = Paths.get("/mammal/carnivore/raccoon.image");
-		System.out.println("Path is: "+path);
+		System.out.println("Path is: " + path);
 		System.out.println("Subpath from 0 to 3 is: "+path.subpath(0,3));
 		System.out.println("Subpath from 1 to 3 is: "+path.subpath(1,3));
 		System.out.println("Subpath from 1 to 2 is: "+path.subpath(1,2));
@@ -144,7 +145,7 @@ public class NIO2_Path {
 		
 		// Joining Path Objects with resolve()
 		path2 = Paths.get("food");
-		System.out.println(path1.resolve(path2)); // \cats\..\panther\food
+		System.out.println(path1.resolve(path2)); // \primate\chimpanzee\food
 		// relativize() and resolve() does not clean up path symbols, like parent directory ..
 		path1 = Paths.get("/turkey/food");
 		path2 = Paths.get("/tiger/cage");
@@ -164,9 +165,7 @@ public class NIO2_Path {
 			System.out.println(Paths.get(firstPart + "\\..\\..\\ipv4converter\\README.md").toRealPath());
 			System.out.println(Paths.get(".").toRealPath());
 		} catch (IOException e) {
-		}		
-		
-		
+		}				
 		
 	}
 }

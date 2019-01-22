@@ -9,9 +9,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
@@ -30,7 +32,7 @@ public class NIO2_Files {
 		// Testing a Path with File.exists(Path) 
 		System.out.println(Files.exists(Paths.get("/ostrich")));
 		// Testing Uniqueness with Files.isSameFile(Path,Path). Not the content.
-		// if two Path objects relate to the same fi le within the fi le system.
+		// if two Path objects relate to the same file within the file system.
 		try {
 			System.out.println(Files.isSameFile(Paths.get("/user/home/cobra"), Paths.get("/user/home/snake")));
 			System.out.println(Files.isSameFile(Paths.get("/user/tree/../monkey"), Paths.get("/user/monkey")));
@@ -59,7 +61,7 @@ public class NIO2_Files {
 		try (InputStream is = new FileInputStream("source-data.txt");
 				OutputStream out = new FileOutputStream("output-data.txt")) {
 			// Copy stream data to file
-			Files.copy(is, Paths.get("c:\\mammals\\wolf.txt"));
+			Files.copy(is, Paths.get("c:\\mammals\\wolf.txt"), StandardCopyOption.ATOMIC_MOVE);
 			// Copy file data to stream
 			Files.copy(Paths.get("c:\\fish\\clown.xsl"), out);
 		} catch (IOException e) {
@@ -68,8 +70,8 @@ public class NIO2_Files {
 		
 		// Changing a File Location with move()
 		// By default, follow links, exception if the file already exists, and not perform an atomic move.
-		// While moving an empty directory across a drive is supported, moving a
-		// non-empty directory across a drive will throw DirectoryNotEmptyException
+		// While moving an empty directory across a drive is supported, 
+		// moving a non-empty directory across a drive will throw DirectoryNotEmptyException
 		try {
 			Files.move(Paths.get("c:\\zoo"), Paths.get("c:\\zoo-new"));
 			Files.move(Paths.get("c:\\user\\addresses.txt"), Paths.get("c:\\zoo-new\\addresses.txt"));
@@ -80,7 +82,7 @@ public class NIO2_Files {
 		// Removing a File with delete() and deleteIfExists()
 		// The Files.delete(Path) method deletes a file or empty directory within the file system.
 		// DirectoryNotEmptyException
-		// The deleteIfExists(Path) will not throw an exception if the fi le or directory does not exist.
+		// The deleteIfExists(Path) will not throw an exception if the file or directory does not exist.
 		
 		// Reading and Writing File Data with newBufferedReader() and newBufferedWriter()
 		// Files.newBufferedReader(Path,Charset) using a java.io.BufferedReader object
@@ -181,7 +183,7 @@ public class NIO2_Files {
 			e.printStackTrace();
 		}
 		
-		// Files.getFileAttributeView(), is used to modify a file’s set of date/time values.
+		// BasicFileAttributeView is used to modify a file’s set of date/time values.
 		BasicFileAttributeView view = Files.getFileAttributeView(path, BasicFileAttributeView.class);
 		try {
 			BasicFileAttributes data2 = view.readAttributes();

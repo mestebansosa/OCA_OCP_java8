@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.Console;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,10 +24,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 
 public class IO {
 	public static void copyStream(File source, File destination) throws IOException {
-		// If the destination fi le already exists, it will be overridden.
+		// If the destination file already exists, it will be overridden.
 		// bad performance.
 		// successive calls to the read() method until a value of -1 is returned.
 		try (InputStream in = new FileInputStream(source); OutputStream out = new FileOutputStream(destination)) {
@@ -74,7 +76,16 @@ public class IO {
 	}
 	
 	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
-		File file = new File("C:\\data");
+		final String path = "C:\\\\data";
+		final String fileName = "zoo.txt";
+		final String pathFileName = path + System.getProperty("file.separator") + fileName;
+		System.out.println(System.getProperty("file.separator"));
+		System.out.println(java.io.File.separator);
+
+		// The File class is used to read information about existing files and directories, list the contents
+		// of a directory, and create/delete files and directories.
+		// The File class cannot read or write data within a file,
+		File file = new File(path);
 		System.out.println(file.exists());
 		if (file.exists()) {
 			System.out.println("Absolute Path: " + file.getAbsolutePath());
@@ -89,34 +100,50 @@ public class IO {
 				}
 			}
 		}
-		File parent = new File("/home/smith");
-		File child = new File(parent,"data/zoo.txt");
+		
+		// create the file in the file system.
+		File parent = new File(path);
+		File child = new File(parent,fileName);
+		child.delete();
+		if(!child.exists()) {
+			child.getParentFile().mkdirs(); 
+			child.createNewFile();
+		}
+		System.out.println(child.exists());
 		
 		// IO Streams. Do not confuse with new Stream API.
+		// A 1 terabyte file could not be stored entirely in memory. The file can be read
+		// and written by a program with very little memory, since the stream allows
+		// the application to focus on only a small portion of the overall stream.
+		
 		// Stream nomenclature:
 		// 1. The stream classes are used for inputting and outputting all types of binary/byte data.
 		//       all of the stream classes have the word InputStream or OutputStream in their name
-		//       This is low-level stream: connects directly with the source of the data.
 		//       Exception: PrintStream (OutputStream) class has no corresponding InputStream class.
+		//       This is low-level stream: connects directly with the source of the data.
 		// 2. The reader/writer classes are used for inputting and outputting only char/String data.
 		//       all Reader/Writer classes have either Reader or Writer in their name.
-		//       This is high-level stream: is built on top of another stream using wrapping.
-		//       high-level stream adds new methods, such as readLine(), as well as performance enhancements.
 		//       Exception: PrintWriter has no accompanying PrintReader class.
-		// Use Buffered Streams When Working with Files. The performance gain cannot be overstated.
-		try (BufferedReader bufferedReader = new BufferedReader(new FileReader("zoo-data.txt"))) {
+		//       This is high-level stream: is built on top of another stream using wrapping.
+		//       Adds new methods, such as readLine(), as well as performance enhancements.
+		// Use Buffered Streams When Working with Files. The performance gain cannot be overstated. 
+		// It is better than going byte by byte.
+		
+		// FileReader is the low-level stream reader, whereas BufferedReader is the high-level stream.		
+		try (BufferedReader bufferedReader = new BufferedReader(new FileReader(pathFileName))) {
 			System.out.println(bufferedReader.readLine());
 		}
-		// FileReader is the low-level stream reader, whereas BufferedReader is the high-level stream.
-		try (ObjectInputStream objectStream = new ObjectInputStream(
-				new BufferedInputStream(new FileInputStream("zoo-data.txt")))) {
-			System.out.println(objectStream.readObject());
-		}
+		
 		// FileInputStream is the low-level, which is wrapped by a high-level BufferedInputStream 
 		// to improve performance. Finally, is wrapped by a high-level ObjectInputStream, 
 		// which allows us to filter the data as Java objects.
+		try (ObjectInputStream objectStream = new ObjectInputStream(
+				new BufferedInputStream(new FileInputStream(pathFileName)))) {
+			System.out.println(objectStream.readObject());
+		}
+		catch (EOFException e) {}
 		
-		// Stream base classes (InputStream, OutputStream, Reader, and Writer abstract classes)
+		// Stream base classes (InputStream, OutputStream, Reader and Writer are abstract classes)
 		// new BufferedInputStream(new FileReader("zoo-data.txt")); // DOES NOT COMPILE
 		// new BufferedWriter(new FileOutputStream("zoo-data.txt")); // DOES NOT COMPILE
 		// new ObjectInputStream(new FileOutputStream("zoo-data.txt")); // DOES NOT COMPILE
@@ -130,7 +157,7 @@ public class IO {
 		// Reader/Writer (abstract)
 		//    FileReader/Writer low (data as characters)
 		//    BufferReader/Writer high (data as buffer, better performance)
-		//    InputStreamrReader/Writer high (data as characters form an existing Input/OutputStream)
+		//    InputStreamReader/OutputStreamWriter high (data as characters from an existing Input/OutputStream)
 		//    PrintWriter high (Writes formatted representations of Java objects to a text-based output stream)
 		
 		// Common Stream Operations
@@ -140,7 +167,7 @@ public class IO {
 		//      the data would be lost, because it was never written to the file system.
 		//      flush(). Only use in extreme cases. Close call flush() automatically.
 		//   Marking the Stream: The InputStream and Reader classes include mark(int) and reset() methods 
-		//      to move the stream back to an earlier position. You should call to markSuppoerted().
+		//      to move the stream back to an earlier position. You should call to markSupported().
 		//      Not call the mark() operation with too large a value as this could take up a lot of memory.
 		//   Skipping over Data: InputStream and Reader classes include a skip(long) method, 
 		//      which skips over a certain number of bytes.
@@ -149,13 +176,14 @@ public class IO {
 		// The FileInputStream and FileOutputStream Classes.
 		File source = new File("Zoo.class"); // It is a binary file
 		File destination = new File("ZooCopy.class");
-		// copyStream(source,destination);
-		
+		//   copyStream(source,destination);		
 		// The BufferedInputStream and BufferedOutputStream Classes
+		//   copyBufferedStream(source,destination);		
 		
-		// The FileReader and FileWriter classes
-		
+		// The FileReader and FileWriter classes		
 		// The BufferedReader and BufferedWriter Classes
+		//   List<String> list = readFile(source);
+		//   writeFile(list, destination);
 		
 		// The ObjectInputStream and ObjectOutputStream Classes
 		// For Serializing and Deserializing Objects.
@@ -180,14 +208,15 @@ public class IO {
 		
 		// Using PrintWriter (although it can be done with PrintStream)
 		// print()
-		PrintWriter out = new PrintWriter("zoo.log");
+		PrintWriter out = new PrintWriter(pathFileName);
 		out.print(5); // PrintWriter method
 		out.write(String.valueOf(5)); // Writer method
 		out.print(2.0); // PrintWriter method
 		out.write(String.valueOf(2.0)); // Writer method
+		out.close();
 		// println. Idem to print() but it uses System.getProperty("line.separator");
 		// format() and printf(): public PrintWriter format(String format, Object args...)
-		File zoo = new File("zoo.log");
+		File zoo = new File(pathFileName);
 		try (PrintWriter zooWriter = new PrintWriter(new BufferedWriter(new FileWriter(zoo)))) {
 			zooWriter.print("Today's weather is: ");
 			zooWriter.println("Sunny");
@@ -203,12 +232,22 @@ public class IO {
 		// The Old Way: System.in returns an InputStream 
 		// It can be chained to a BufferedReader to allow input that terminates with the Enter key.
 		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Enter something...");	
 		String userInput = reader.readLine();
 		System.out.println("You entered the following: " + userInput);	
+		reader.close();
+		
+		// using scanner
+		Scanner scanIn = new Scanner(System.in);
+		String inputString = scanIn.nextLine();
+		scanIn.close();           
+		System.out.println("Name entered : " + inputString);
+
 		// The New Way: In Java 6, the java.io.Console class. Console class is a singleton
+		// System.console() returns null in an IDE
 		Console console = System.console();
 		if (console != null) {
-			String userInput2 = console.readLine();
+			String userInput2 = console.readLine("Enter something...");
 			console.writer().println("You entered the following: " + userInput2);
 		}		
 		// reader() and writer()
@@ -249,11 +288,11 @@ public class IO {
 		for (int i = 0; i < password.length; i++) {
 			password[i] = 'x';
 		}
+		
 		// other way to fill the array with x's
 		Arrays.fill(verify,'x');
 		console.format("Your password was " + (match ? "correct" : "incorrect"));		
-		
-		
+				
 		
 	}
 }
