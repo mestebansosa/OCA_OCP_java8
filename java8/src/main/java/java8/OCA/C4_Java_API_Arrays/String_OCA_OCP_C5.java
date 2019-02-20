@@ -21,9 +21,8 @@ public class String_OCA_OCP_C5 {
     	// String is immutable. JVM reuse String objects, reduce memory overhead and best performance.
     	// String uses a char array to store its value: 
     	//    private final char value[]; The arrays are fixed in size. They can't grow after initialization
-    	// String methods do not modify the value.
     	
-    	// Methods
+    	// Methods. String methods do not modify the value, in other case, return a new String.
     	System.out.println(str1.charAt(0));
     	System.out.println(str1.indexOf('a'));
     	System.out.println(str1.indexOf('a',2));
@@ -41,6 +40,9 @@ public class String_OCA_OCP_C5 {
     	String initializedToNull = null;
     	initializedToNull += "Pepe";
     	System.out.println(initializedToNull); // nullPepe
+    	// Convert to String
+    	String converting = "" + 5 + 6 + 10;
+    	System.out.println(converting); // 5610
     	
     	// equals()
     	/* Contract:
@@ -54,7 +56,7 @@ public class String_OCA_OCP_C5 {
     	// StringBuilder. Mutable String
     	//     char value[];
     	// creation
-    	StringBuilder sb1 = new StringBuilder();
+    	StringBuilder sb1 = new StringBuilder(); // No static method creation.
     	// methods
     	System.out.println(sb1.append("hola")); // at the end
     	System.out.println(sb1.append("hola",1,3)); // holaol

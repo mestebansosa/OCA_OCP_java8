@@ -13,8 +13,9 @@ public class Polymorphism {
 
 	class Lemur extends Primate implements HasTail {
 		public int age = 10;
+
 		public boolean isTailStriped() {
-		return false;
+			return false;
 		}
 	}
 	
@@ -43,9 +44,8 @@ public class Polymorphism {
 		// 1. The type of the object determines which properties exist within the object in memory.
 		// 2. The type of the reference to the object determines which methods and variables are
 		//    accessible to the Java program.
-		// The same object exists in memory regardless of which reference is pointing to
-		// it. Depending on the type of the reference, we may have access only to
-		// certain methods.
+		// The same object exists in memory regardless of which reference is pointing to it.
+		// Depending on the type of the reference, we may have access only to certain methods.
 
 		// Casting Object References
 		/*

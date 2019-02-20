@@ -3,6 +3,7 @@ package java8.OCP.C4_FunctionalProgramming;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,8 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+
+import java8.OCP.C3_Generics_Collections.Comparator_Comparable.Duck;
 
 public class BuiltIn_FunctionalInterfaces {
 	
@@ -71,6 +74,10 @@ public class BuiltIn_FunctionalInterfaces {
 		
 		Runnable             0          void       run
 		Callable<T>          0          T          call        throws Exception
+		
+		Comparable<T>		 1 (T)		int 	   compareTo
+		Comparator<T>		 2 (T, T)   int    	   compare;
+
 		*/
 				
 		// A Supplier is used when you want to generate or supply (return) values

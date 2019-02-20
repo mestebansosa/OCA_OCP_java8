@@ -39,7 +39,7 @@ public class Interfaces_OCA_OCP_C2 {
 	class Animal implements Jumpable, Moveable {
 		Animal() {
 			System.out.println(Jumpable.MIN_DISTANCE);
-			// currentPosition(); // It is ambiguos. Don't compile
+			// currentPosition(); // It is ambiguous. Don't compile
 			Moveable.maxDistance();
 			Jumpable.maxDistance();
 		}
@@ -53,7 +53,7 @@ public class Interfaces_OCA_OCP_C2 {
     	// Interface is specifications or contract. A set of rules. 
 		// Is an abstract data type.
     	// with java8 an interface can define:
-		//    - constant public static final variables
+		//    - constant "public static final" variables
     	//    - the default method implementation
     	//    - static methods
     	
@@ -71,7 +71,7 @@ public class Interfaces_OCA_OCP_C2 {
 		// other team develops code that implements the interface.
 		// The developer using the interface can create a temporary mock/dummy object
 		
-		// access modifiers: public or no modifier (defautl access) for all (interface and members)
+		// access modifiers: public or no modifier (default access) for all (interface and members)
 		// nonaccess modifiers: abstract or strictfp for interface
 		
 		// Reference variable and object types: objects of derived classes can be referred to using a 

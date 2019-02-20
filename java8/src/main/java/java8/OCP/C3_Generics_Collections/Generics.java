@@ -56,7 +56,7 @@ public class Generics {
 	
     public static void main(String[] args) {
     	// without generics, it easy to get a ClassCastException
-    	// legacy code is older code.
+    	// legacy code is the older code.
     	// Java presents a compiler warning for older code. Note: Recompile with -Xlint:unchecked for details. 	
     	List names = new ArrayList();
     	names.add(new StringBuilder("Webby"));
@@ -79,7 +79,7 @@ public class Generics {
     	Here are the things that you can’t do with generics.
     	- Call the constructor. new T() is not allowed because at runtime it would be new Object().
     	- Create an array of that static type.
-    	- Call instanceof. at runtime List<Integer> and List<String> look the same to Java
+    	- Call instanceof. At runtime List<Integer> and List<String> look the same to Java, Objects.
     	- Use a primitive type as a generic type parameter.
     	- Create a static variable as a generic type parameter.    	
     	*/

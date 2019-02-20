@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.NavigableSet;
 import java.util.Queue;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class Collections_API {
@@ -78,6 +79,9 @@ public class Collections_API {
 		Set<Integer> setInt = new HashSet<>();
 		boolean b1 = setInt.add(66);
 		b1 = setInt.add(66); // false
+
+		SortedSet<Integer> set2 = new TreeSet<>();
+		// SortedSet<Integer> set3 = new HashSet<>(); // does not compile
 		
 		// NavigableSet methods: lower,higher,floor,ceiling
 		NavigableSet<Integer> set = new TreeSet<>();

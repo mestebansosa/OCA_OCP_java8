@@ -34,7 +34,7 @@ public class FunctionalInterface_Lambda {
 		// A lambda expression is a block of code that gets passed around, like an anonymous method.
 		
 		// @FunctionalInterface Annotation is not required, but it is recommended.
-		// another developer may treat any interface you create that has only one method as
+		// another developer may treat any interface you create that has only one method
 		print(new String("fish"), a -> a.charAt(0) == 'f');
 		print(new String("fish"), a -> ! a.isEmpty());
 		
@@ -42,6 +42,10 @@ public class FunctionalInterface_Lambda {
 		// A lambda expression is a block of code that gets passed around, like an anonymous method.
 		// It can be consumed by a functional interface whose abstract method has the
 		// same number of parameters and compatible data types.
+		
+		// Recall that lambda expressions rely on the notion of deferred execution.
+		// Deferred execution means that code is specified now but runs later.
+		
 		// syntax: parameters, arrow, body
 		// The parentheses () in parameters, can be omitted in a lambda expression if there is exactly
 		// one input parameter and the type is not explicitly stated in the expression.

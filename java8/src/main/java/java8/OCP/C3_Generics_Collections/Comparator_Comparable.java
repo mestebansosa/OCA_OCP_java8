@@ -92,6 +92,7 @@ public class Comparator_Comparable {
 
 	public static void main(String[] args) {
 		// Numbers sort before letters and uppercase letters sort before lowercase letters.
+
 		// Comparable
 		// It is a functional interface but its does not make any sense using lambdas.
 		/*

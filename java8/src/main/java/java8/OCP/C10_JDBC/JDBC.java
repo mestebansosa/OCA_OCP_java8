@@ -41,7 +41,7 @@ public class JDBC {
 	
 	// Getting a Database Connection
 	// There are two main ways to get a Connection
-	// - DriverManager is the one covered on the exam. Do not use a DriverManager in code.
+	// - DriverManager is the one covered on the exam. Do not use a DriverManager in real code.
 	// - DataSource is a factory, and it has more features than DriverManager.
 	//   For ex: it can pool connections or store the database connection info outside the application.
 	/*
@@ -66,8 +66,7 @@ public class JDBC {
 	// DriverManager knows that a JAR is a driver because it contains a file called java.sql.Driver
 	// in the directory META-INF/services. In other words, a driver might contain this information:
 	// META-INF (mandatory with JDBC >= 4.0 Driver in Java 6)
-	//		−service
-	//		―java.sql.Driver
+	//		/service/java.sql.Driver
 	// 		com
 	// 		−wiley
 	// 		―MyDriver.class
@@ -107,7 +106,7 @@ public class JDBC {
 		ResultSet Type			Can Read 		Can update			Supported by
 								Data			Data				All Drivers
 		CONCUR_READ_ONLY		Yes 			No					Yes
-		CONCUR_UPDATABLEYes 	Yes 			Yes					No
+		CONCUR_UPDATABLE	 	Yes 			Yes					No
 	 */
 	
 	// Third step: Executing a Statement
@@ -166,14 +165,14 @@ public class JDBC {
 		ResultSet rs = stmt.executeQuery("select id, name from species");
 		while(rs.next()) {
 			int id = rs.getInt("id"); // by column name. Best way.
-			int id = rs.getInt(1);    // by columna nuber. Starts from 1.
+			int id = rs.getInt(1);    // by column number. Starts from 1.
 			String name = rs.getString("name");
 			idToNameMap.put(id, name);
 		}
 	*/
 	// A ResultSet has a cursor, which points to the current location in the data.
 	// On the first loop iteration, rs.next() returns true and the cursor moves to point to the 
-	// first row of data. Amnd so on until rs.next() returns false.
+	// first row of data. And so on until rs.next() returns false.
 	
 	// When you want only one row, you use an if statement rather than a while loop.
 	// Very important to check that rs.next() returns true before trying to call a getter on the ResultSet
@@ -186,7 +185,7 @@ public class JDBC {
 	// Column indexes begin with 1.
 	
 	// Getting Data for a Column: the getTYPE methods.
-	// not all the primitives are covered. Fir instance getChar() does not exist.
+	// not all the primitives are covered. For instance getChar() does not exist.
 	// getDate() and getTimestamp()
 	/*
 	  	java.sql.Date sqlDate = rs.getDate(1);
@@ -210,6 +209,8 @@ public class JDBC {
 		Method 					Description 					Requires Scrollable ResultSet
 		boolean absolute(int	Move cursor to the specified	Yes
 		rowNum)					row number
+		boolean relative(int	Move cursor forward or backward	Yes
+		rowNum)					the specified number of rows
 		void afterLast() 		Move cursor to a location		Yes
 								immediately after the last row
 		void beforeFirst() 		Move cursor to a location		Yes
@@ -219,9 +220,6 @@ public class JDBC {
 		boolean last() 			Move cursor to the last row 	Yes
 		boolean next() 			Move cursor one row forward 	No
 		boolean previous() 		Move cursor one row backward	Yes
-		boolean relative(int	Move cursor forward or backward	Yes
-		rowNum)					the specified number of
-								rows
 	 */
 	/*
 	Now let’s look at an example where the query doesn’t return any rows:
@@ -252,7 +250,7 @@ public class JDBC {
 	 	} finally {
 			closeResultSet(rs);
 			closeStatement(stmt);
-			closeConnection(conn);
+			closeConnection(conn); <-- this will close the others.
 			}
 		}
 		private static void closeResultSet(ResultSet rs) {
@@ -265,8 +263,8 @@ public class JDBC {
 	// - Closing a Connection also closes the Statement and ResultSet. <- NOTE
 	// - Closing a Statement also closes the ResultSet.
 	
-	// There’s another way to close a ResultSet. JDBC automatically closes a ResultSet when
-	// you run another SQL statement from the same Statement.
+	// There’s another way to close a ResultSet. JDBC automatically closes a ResultSet
+	// when you run another SQL statement from the same Statement.
 	
 	/*
 	 How many resources are closed in this code?

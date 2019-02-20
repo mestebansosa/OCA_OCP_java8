@@ -69,5 +69,30 @@ public class Map_API {
     	counts.computeIfAbsent("Jenny", function); // 15
     	counts.computeIfAbsent("Sam", function); // 1
     	counts.computeIfAbsent("Tom", function); // 1
+    	
+    	// Choosing the right collection type
+    	/*
+    	Which class do you choose when					Answer (single
+    	you want ____________							best type) Reason
+    	
+    	to pick the top zoo map off a stack of maps		ArrayDeque
+    	
+    	to sell tickets to people in the order in 
+    	which they appear in line  and tell them 
+    	their position in line							LinkedList
+    	
+    	to write down the first names of all of the 
+    	elephants (The elephants do not have unique 
+    	first names.)									ArrayList 
+    	
+    	to list the unique animals that
+    	you want to see at the zoo today				HashSet 
+    	
+    	to list the unique animals that you want to 
+    	see at the zoo today in alphabetical order		TreeSet
+    	
+    	to look up animals based on a unique identifier	HashMap
+    	 */
+    	
     }			
 }

@@ -64,13 +64,13 @@ public class DesignPatterns {
 	}
 	
 	public static void main(String[] args) {
-		// A design pattern is an established general solution to a commonly occurring software development problem.
+		// A design pattern is an established general solution to a commonly occurring SW development problem.
 		// Common vocabulary.
 		
 		// Types, according to the Gang of four book.
 		// Creational: Factory Method, Abstract Factory, Builder, Prototype, Singleton
 		// Structural: Adapter, Bridge, Composite, Decorator, Facade, Proxy
-		// Behavioral: Interpreter, Template Method, Chain of responsability, Command,
+		// Behavioral: Interpreter, Template Method, Chain of responsibility, Command,
 		//    Iterator, Mediator, Memento, Flyweight, Observer, State, Strategy, Visitor.
 		
 		// Creational
@@ -129,7 +129,7 @@ public class DesignPatterns {
 		// String class is immutable.
 		/* Rules:
 		   	1. Use a constructor to set all properties of the object.
-			2. Mark all of the instance variables private and final .
+			2. Mark all of the instance variables private and final.
 			3. Don’t define any setter methods.
 			4. Don’t allow referenced mutable objects to be modified or accessed directly.
 			5. Prevent methods from being overridden. (mark the class as final)

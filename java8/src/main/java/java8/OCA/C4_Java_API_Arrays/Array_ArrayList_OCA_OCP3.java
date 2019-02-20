@@ -8,8 +8,8 @@ import java.util.ListIterator;
 
 public class Array_ArrayList_OCA_OCP3 {
 	public static void main(String[] args) {
-		// Arrays stores its elements (objects or primitives) continously. Thats is
-		// better for the perfomance.
+		// Arrays stores its elements (objects or primitives) continuously. Thats is
+		// better for the performance.
 		// ArrayList contain objects but not primitives. List is like resizable array.
 
 		// Declaration with any type (primitive, interface, abstract or concrete class)
@@ -18,7 +18,7 @@ public class Array_ArrayList_OCA_OCP3 {
 		String[][] stringArray; // is preferred [] next to the type.
 		char[] charArray[];
 
-		// Allocation with new. When defined it can be changed. The allocation insert
+		// Allocation with new. When defined it cannot be changed. The allocation insert
 		// the default values of the type.
 		intArray = new int[30];
 		intArray = new int[3*10];
@@ -46,13 +46,14 @@ public class Array_ArrayList_OCA_OCP3 {
 		int ia[];
 		// ia = {0,1,2}; Won't compile
 		ia = new int[] { 0, 1, 2 };
+		int ia2[] = { 0, 1, 2 };
 
 		// Asymmetrical: an array can define a different number of columns for each of its rows.
 
 		// Array of objects, or interfaces of abstract classes.
 		Object[] objArray = new Object[] { new String(), null, new Integer(5) };
 
-		// Take care of the length. It is an attribute in String or a method() in Arrays.
+		// Take care of the length. It is an attribute in Array and a method() in String.
 		String a = new String();
 		System.out.println(a.length());
 		System.out.println(strArray.length);
@@ -62,6 +63,7 @@ public class Array_ArrayList_OCA_OCP3 {
 		// This class also contains a static factory that allows arrays to be viewed as lists.
 		int[] numbers = { 6, 9, 1, 8 };
 		Arrays.sort(numbers); // [1,6,8,9]
+		Arrays.asList(numbers);
 		Arrays.asList(9, 7, 5, 3);
 		System.out.println(Arrays.binarySearch(numbers, 6)); // 1
 		System.out.println(Arrays.binarySearch(numbers, 3)); // -2. Number 3 would be inserted at index 1. -1-1= -2
@@ -72,13 +74,12 @@ public class Array_ArrayList_OCA_OCP3 {
 		// Is a resizable array
 		// No needed to specify initial size.
 		// Allows null and duplicates. Preserves the order of insertion
-		// Supports generics. Preserves the order of insertion
+		// Supports generics.
 
 		// java.util.Collections. 
-		// This class consists exclusively of static methods that operate on or return
-		// collections. It contains polymorphic algorithms that operate on collections,
-		// "wrappers", which return a new collection backed by a specified collection,
-		// and a few other odds and ends.
+		// This class consists exclusively of static methods that operate on or return collections. 
+		// It contains polymorphic algorithms that operate on collections, "wrappers", 
+		// which return a new collection backed by a specified collection, and a few other odds and ends.
 		// Search and Sorting
 		List<Integer> list = Arrays.asList(9, 7, 5, 3);
 		Collections.sort(list); // [3, 5, 7, 9]
@@ -86,7 +87,7 @@ public class Array_ArrayList_OCA_OCP3 {
 		System.out.println(Collections.binarySearch(list, 2)); // -1. Number 2 would be at index 0. 0-1 = -1
 
 		ArrayList<String> arrayList = new ArrayList<>();  // diamond operator from Java 7
-		List<String> arrayList2 = new ArrayList<>();
+		List<String> arrayList2 = new ArrayList<>(); // Better assigning to the interface
 		arrayList2.add("pepe");
 		arrayList2.add(new String("pepe"));
 		for (String string : arrayList2) {
@@ -113,13 +114,14 @@ public class Array_ArrayList_OCA_OCP3 {
 		array[0] = "new"; // [new, test]
 		String[] array2 = (String[]) listCopy.toArray(); // [new, test]
 		// listCopy.remove(1); // throws UnsupportedOperationException
+		// listCopy.add("another"); // throws UnsupportedOperationException
 		
 		ArrayList<String> arrayListAddAll = new ArrayList<String>();
 		List<String> arrayListAsList = new ArrayList<String>();
 		ArrayList<String> arrayListAssignation = new ArrayList<String>();
 		ArrayList<String> arrayListClone = new ArrayList<String>();
 		
-		arrayListAddAll.addAll(arrayList3); // copies
+		arrayListAddAll.addAll(arrayList3); // append
 		arrayListAsList = Arrays.asList(arrayList33); // copies references. So both are modified.
 		arrayListAssignation = arrayList3; // copies.
 		arrayListClone = (ArrayList<String>) arrayList3.clone(); // clone is a copy

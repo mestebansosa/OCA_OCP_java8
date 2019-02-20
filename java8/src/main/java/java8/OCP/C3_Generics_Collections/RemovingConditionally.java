@@ -19,7 +19,7 @@ public class RemovingConditionally {
     	// places.removeIf(s -> s.startsWith("B")); // throws UnsupportedOperationnException
     	System.out.println(places);
     	
-    	// Java8. replaceAll on Lists
+    	// Java8. replaceAll on Lists. Updating all elements.
     	places.replaceAll(s -> s.toUpperCase());
     	System.out.println(places);
     	

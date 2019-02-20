@@ -74,7 +74,7 @@ public class Enums {
 		System.out.println(Season.SUMMER); // SUMMER
 		System.out.println(s == Season.SUMMER); // true
 		
-		// values(), names(), ordinal()
+		// values(), name(), ordinal()
 		for (Season season : Season.values()) {
 			System.out.println(season.name() + " " + season.ordinal());
 		}

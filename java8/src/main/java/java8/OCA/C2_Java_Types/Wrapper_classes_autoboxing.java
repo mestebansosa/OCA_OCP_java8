@@ -2,13 +2,16 @@ package java8.OCA.C2_Java_Types;
 
 public class Wrapper_classes_autoboxing {
     public static void main(String[] args) {
+    	// wrapper classes are immutable.
     	// wrapper are: Boolean, Character, Byte, Short, Integer, Long, Float and Double 
     	// all can be serialized to a stream.
     	
+    	// Autoboxing 
+    	//   automatically converts a primitive to the corresponding wrapper classes
     	// Creating
-    	// Autoboxing automatically converts a primitive to the corresponding wrapper classes
+    	// assignment
     	Boolean bool1 = true;
-    	// Constructor
+    	// Constructor. There is not no-argument constructor.
     	bool1 = new Boolean(true);
     	bool1 = new Boolean("true"); // all constructors accept String, except Character.
     	// Using static method
@@ -16,7 +19,8 @@ public class Wrapper_classes_autoboxing {
     	bool1 = Boolean.valueOf("TrUe");
     	Double.valueOf(5); 
     	
-    	// Unboxing with <primitive>Value(). Automatically converts a wrapper class back to a primitive.
+    	// Unboxing 
+    	//    with <primitive>Value(). Automatically converts a wrapper class back to a primitive.
     	boolean bool2 = bool1.booleanValue();
     	// parsing a string value to a primitive, with parse<DataType>(String)
     	Boolean.parseBoolean("true");
@@ -48,6 +52,7 @@ public class Wrapper_classes_autoboxing {
     	Integer int1 = new Integer(100);
     	System.out.println(int1 += 1);
    	
+    	// unboxing a wrapper reference variable, which refers to null, throws NullPointerException.
     	
     	// Use always StringBuilder and not StringBuffer as the last is synchronous
     }			

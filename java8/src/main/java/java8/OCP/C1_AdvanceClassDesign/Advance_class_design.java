@@ -20,7 +20,8 @@ public class Advance_class_design {
 
 	public static void main(String[] args) {
 		// OCA concepts
-		// Access modifiers: public, protected, and private and default.
+		// Access modifiers: public, protected, and private and default. 
+		// After goes the Nonaccess modifier if exists. But can be interchanged.
 
 		// Oveloading and Overriding. 
 		// Method signature is method name and parameter list.
@@ -82,9 +83,9 @@ public class Advance_class_design {
 		Hippo anotherHippo = new Hippo();
 		// boolean b6 = anotherHippo instanceof Elephant; // DOES NOT COMPILE.
 		
-		// The compilation check only applies when instanceof is called on a class. When
-		// checking whether an object is an instanceof an interface, Java waits until
-		// runtime to do the check.
+		// The compilation check only applies when instanceof is called on a class.
+		// When checking whether an object is an instanceof an interface, Java waits
+		// until runtime to do the check.
 		
 		// Virtual Method Invocation. 
 		// It does not work for instance variables.
@@ -92,22 +93,23 @@ public class Advance_class_design {
 		class Cow implements Animal {
 			String name = "Cow";
 			public void feed() { addHay(); }
-			private void addHay() { }
+			private void addHay() { System.out.println("hay");}
 		}
 		class Bird implements Animal {
+			String name = "Bird";
 			@Override
 			public String toString() {
 				return "Bird [name=" + name + "]";
 			}
-			String name = "Bird";
+			@Override
 			public void feed() { addSeed(); }
-			private void addSeed() { }
 			@Override
 			public void printName() {};
+			private void addSeed() {System.out.println("seed");}
 		}
 		// See feedAnimal method above.
 		Animal cow = new Cow();
-		new Advance_class_design().feedAnimal(cow); // will print ???
+		new Advance_class_design().feedAnimal(cow); // will print hay and ???
 		
 		// Annotating Overridden methods
 		// An annotation is extra information about the program, and it
@@ -126,6 +128,7 @@ public class Advance_class_design {
 				return ToStringBuilder.reflectionToString(this);
 				}
 			 */
+		
 		// equals(). There are several rules to override equals. If x.equals(null) return false
 		/*
 			@Override 
@@ -135,13 +138,12 @@ public class Advance_class_design {
 				return this.idNumber == otherLion.idNumber;
 			}
 		 */
+		
 		// hashCode(). Whenever you override equals(), do the same with hashCode(). 
 		// 		public int hashCode() { return idNumber; }
 		// So, variables used in equals() should be used in hashCode()
-		// If equals() returns true when called with two objects, calling hashCode() on
-		//   each of those objects must return the same result.
-		// If equals() returns false when called with two objects, calling hashCode() on
-		//   each of those objects does not have to return a different result.
+		// If a.equals(b) is true, a.hashCode() == b.hashCode() is always true.
+		// If a.equals(b) is false, a.hashCode() == b.hashCode() can sometimes be true.		
 		
 	}
 

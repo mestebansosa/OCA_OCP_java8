@@ -35,8 +35,8 @@ public class Bounds {
 		
     public static void main(String[] args) {
     	// A bounded parameter type is a generic type that specifies a bound for the generic.
-    	// A wildcard generic type is an unknown generic type represented with a question mark
-    	// (?). You can use generic wildcards in three ways:
+    	// A wildcard generic type is an unknown generic type represented with a question mark (?).
+    	// You can use generic wildcards in three ways:
     	
     	// Unbounded wildcards. You want to specify that any type is OK with you.
     	// List<String> cannot be assigned to List<Object>
