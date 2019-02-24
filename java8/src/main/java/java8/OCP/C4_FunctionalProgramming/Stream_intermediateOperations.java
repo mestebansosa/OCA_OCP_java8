@@ -18,7 +18,7 @@ public class Stream_intermediateOperations {
 		// Solution:
 		// https://www.baeldung.com/java-stream-operated-upon-or-closed-exception
 		Supplier<Stream<String>> streamSupplierAnimals = () -> Stream.of("monkey", "gorilla", "bonobo");
-		Supplier<Stream<Integer>> infinite = () -> Stream.iterate(1, x -> x + 1);
+		Supplier<Stream<Integer>> streamInfinite = () -> Stream.iterate(1, x -> x + 1);
 
 		// Unlike a terminal operation, intermediate operations deal with infinite
 		// streams simply by returning an infinite stream. Since elements are produced
@@ -80,16 +80,16 @@ public class Stream_intermediateOperations {
 				.forEach(System.out::println);
 */		
 		//Stream<Integer> infinite = Stream.iterate(1, x -> x + 1);
-		infinite.get().limit(5)
+		streamInfinite.get().limit(5)
 		.filter(x -> x % 2 == 1)
 		.forEach(System.out::print); // 135
 		
-		infinite.get().limit(5)
+		streamInfinite.get().limit(5)
 		.peek(System.out::print)
 		.filter(x -> x % 2 == 1)
 		.forEach(System.out::print); // 11233455
 		
-		infinite.get().filter(x -> x % 2 == 1)
+		streamInfinite.get().filter(x -> x % 2 == 1)
 		.peek(System.out::print)
 		.limit(5)
 		.forEach(System.out::print); // 1133557799.

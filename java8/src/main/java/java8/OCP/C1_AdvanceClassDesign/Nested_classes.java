@@ -60,11 +60,11 @@ public class Nested_classes {
 		// Can access members of the outer class including private members
 		// Compiler creates Outer$Inner.class.
 		Nested_classes c1 = new Nested_classes();
-		Inner outer = c1.new Inner();
-		outer.callInner();
-		// other access way
-		Nested_classes.Inner.Inner2 inner = outer.new Inner2();
-		inner.go();
+		Inner inner = c1.new Inner();
+		inner.callInner();
+		// other access way /* 
+		Nested_classes.Inner.Inner2 inner2 = inner.new Inner2();
+		inner2.go();
 		
 		// - A local inner class is defined within a method. Exists when method is invoked.
 		// They do not have an access specifier.

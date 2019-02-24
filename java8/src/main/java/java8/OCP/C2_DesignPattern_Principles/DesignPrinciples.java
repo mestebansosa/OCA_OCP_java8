@@ -83,7 +83,7 @@ public class DesignPrinciples {
 		// In particular, the class contains the other classes in the has‐a sense and
 		// may delegate methods to the other classes.
 		// Object composition should be thought of as an alternate to inheritance and is
-		// often used to simulate polymorphic behavior that cannot be achieved via single
+		// often used to simulate polymorphism behavior that cannot be achieved via single
 		// inheritance.	
 		
 		// One of the advantages of object composition over inheritance is that it tends

@@ -76,6 +76,19 @@ public class Interfaces_OCA_OCP_C2 {
 		
 		// Reference variable and object types: objects of derived classes can be referred to using a 
 		// reference variable of: its own type, its superclass or implemented interfaces.
+		
+		// Marker interfaces in java are interfaces with no members declared in them.
+		// They are just an empty interfaces used to mark or identify a special
+		// operation. For example, Cloneable interface is used to mark cloning operation
+		// and Serializable interface is used to mark serialization and deserialization
+		// of an object. Marker interfaces give instructions to JVM that classes
+		// implementing them will have special behavior and must be handled with care.
+		
+		// With the introduction of annotations from Java 5, annotations are used more
+		// instead of marker interfaces to provide metadata
     	
+		// Shallow copy is superficial, poco profundo. Object refereces are equal
+		// deep copy, is copy all. Object references are copied also.
+		// https://javaconceptoftheday.com/difference-between-shallow-copy-vs-deep-copy-in-java/
     }			
 }

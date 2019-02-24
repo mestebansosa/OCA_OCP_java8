@@ -67,7 +67,7 @@ public class DesignPatterns {
 		// A design pattern is an established general solution to a commonly occurring SW development problem.
 		// Common vocabulary.
 		
-		// Types, according to the Gang of four book.
+		// Types, according to the Gang of four book (GoF Patterns).
 		// Creational: Factory Method, Abstract Factory, Builder, Prototype, Singleton
 		// Structural: Adapter, Bridge, Composite, Decorator, Facade, Proxy
 		// Behavioral: Interpreter, Template Method, Chain of responsibility, Command,
@@ -81,7 +81,12 @@ public class DesignPatterns {
 		// By marking the constructors private, we have implicitly marked the class effectively final. 
 		// Instantiation the singleton object:
 		//   1.- directly in the definition of the instance reference
-		//       private static final HayStorage instance = new HayStorage();
+		/*
+		      private HayStorage() {}  // with this the class is final.
+		      private static final HayStorage instance = new HayStorage();
+		      public static HayStorage getInstance() { return instance; }
+		      and marked all the other methods with synchronized.
+		*/
 		//   2.- Instantiation using a static block
 		/*
 			public class StaffRegister {

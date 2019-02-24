@@ -38,11 +38,10 @@ public class FunctionalInterface_Lambda {
 		print(new String("fish"), a -> a.charAt(0) == 'f');
 		print(new String("fish"), a -> ! a.isEmpty());
 		
-		// Lambda uses deferred execution.
-		// A lambda expression is a block of code that gets passed around, like an anonymous method.
 		// It can be consumed by a functional interface whose abstract method has the
 		// same number of parameters and compatible data types.
 		
+		// Lambda uses deferred execution.
 		// Recall that lambda expressions rely on the notion of deferred execution.
 		// Deferred execution means that code is specified now but runs later.
 		
