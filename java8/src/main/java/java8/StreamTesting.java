@@ -26,7 +26,7 @@ public class StreamTesting {
 	}	
     public static void main(String[] args) {
         final Comparator<String> comp = (p1, p2) -> Integer.compare( p1.length(), p2.length());
-    	String aux = "esto es una prueba que me hicieron estos, en no recuerdo el nombre, para ver si sabia programar";
+    	String aux = "esto es una prueba que me hicieron, en no recuerdo el nombre, para ver si sabia programar";
     	System.out.println("Max: " + Stream.of(aux.split(" ")).max(comp).get());
     	System.out.println("Min: " + Stream.of(aux.split(" ")).min((p1, p2) -> Integer.compare(p1.length(), p2.length())).get());
     	System.out.println("Uppercase: " + Stream.of(aux.split(" ")).map(p1 -> p1.toUpperCase()).collect(Collectors.toList()));

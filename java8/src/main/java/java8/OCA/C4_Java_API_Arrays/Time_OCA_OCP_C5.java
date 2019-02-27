@@ -16,7 +16,7 @@ import java.time.temporal.ChronoUnit;
 
 public class Time_OCA_OCP_C5 {
     public static void main(String[] args) {
-    	System.out.println(-1.0/0);
+    	System.out.println(-1.0/0); // -Infinity
     	
     	// The old - new way:
     	/* 
@@ -31,6 +31,7 @@ public class Time_OCA_OCP_C5 {
     	// LocalDate.of(2015, Month.JANUARY, 32); // throws DateTimeException
     	
     	// LocalDate. YYYY-MM-DD. 
+    	System.out.println("-- LocalDate. YYYY-MM-DD");
     	LocalDate date1 = LocalDate.of(2018, 12, 10);
     	LocalDate date2 = LocalDate.of(2018, Month.DECEMBER, 10);
     	LocalDate date3 = LocalDate.now();
@@ -52,6 +53,7 @@ public class Time_OCA_OCP_C5 {
     	System.out.println(date1.toEpochDay()); // long
     	
     	// LocalTime. HH:MM:SS:SSSS
+    	System.out.println("-- LocalTime. HH:MM:SS:SSSS");
     	LocalTime time1 = LocalTime.of(12, 12);
     	LocalTime time2 = LocalTime.of(0, 12, 6);
     	LocalTime time3 = LocalTime.of(14, 7, 10, 998564632); // nanoseconds
@@ -68,11 +70,12 @@ public class Time_OCA_OCP_C5 {
 
     	// converting to another type
     	System.out.println(time5.atDate(date3));
-    	// System.out.println(time5.toEpochDay()); // LocalTome has not epoch method
+    	// System.out.println(time5.toEpochDay()); // LocalTime has not epoch method
 
     	// LocalDateTime. YYYY-MM-DDTHH:MM:SS:SSSS.
     	// Java uses T to separate the date and time when converting LocalDateTime to a String.
     	// Both functionalities (without the time zone)
+    	System.out.println("-- LocalDateTime. YYYY-MM-DDTHH:MM:SS:SSSS");
     	LocalDateTime dateTime = LocalDateTime.parse("2050-06-05T15:08:23");
     	LocalDateTime dateTime2 = LocalDateTime.now();
     	System.out.println(dateTime);
@@ -82,6 +85,7 @@ public class Time_OCA_OCP_C5 {
    	
     	// Period. 
     	// PnYnMnD or PnW. It is a day or more of time. P is mandatory 
+    	System.out.println("-- Period PnYnMnD or PnW");
     	Period period1 = Period.of(1, 2, 7);
     	Period period2 = Period.ofYears(2);
     	System.out.println(dateTime + "---" + dateTime.plus(period2)); // Easier use for other types
@@ -90,6 +94,8 @@ public class Time_OCA_OCP_C5 {
     	System.out.println(Period.ofDays(-15));
     	System.out.println(Period.ofDays(35));
     	System.out.println(Period.parse("-P-5Y"));
+    	System.out.println(Period.parse("-P-5Y-5D").equals(Period.parse("P5Y5D")));
+    	System.out.println(Period.parse("P5Y5D"));
     	
     	System.out.println(date4.plus(Period.ofDays(1)));
     	
@@ -107,6 +113,7 @@ public class Time_OCA_OCP_C5 {
     	// PTnHnMnS. PT (period of time) is mandatory.
     	// Period and Duration are not equivalent.
     	// LocalDate use Period but Not duration. LocalTime use Duration but not Period.
+    	System.out.println("-- Duration PTnHnMnS");
     	Duration.ofSeconds(3600); // to mean one hour.
     	// Use TemporalUnit interface. ChronoUnit is one implementation.
     	Duration daily = Duration.of(1, ChronoUnit.DAYS);
@@ -131,10 +138,15 @@ public class Time_OCA_OCP_C5 {
     	
     	// Instant. 
     	// Represents a specific moment in time in the GMT time zone.
+    	System.out.println("-- Instant");
     	Instant now = Instant.now();
+    	System.out.println(now); 
     	Instant later = Instant.now();
+    	System.out.println(later); 
     	System.out.println(Duration.between(now, later).toNanos());
+
     	// With ZoneDateTime you can turn into an Instant
+    	System.out.println("-- ZoneDateTime");
     	LocalDate date0 = LocalDate.of(2015, 5, 25);
     	LocalTime time0 = LocalTime.of(11, 55, 00);
     	ZoneId zone0 = ZoneId.of("US/Eastern");
@@ -148,6 +160,7 @@ public class Time_OCA_OCP_C5 {
     	// DateTimeFormatter
     	// DateTimeFormatter can be used to format any type of date and/or time object.
     	// By calling a static ofLocalizedXXX method
+    	System.out.println("-- DateTimeFormatter");
     	DateTimeFormatter formatter1 = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
     	DateTimeFormatter formatter2 = DateTimeFormatter.ofLocalizedTime(FormatStyle.MEDIUM);
     	DateTimeFormatter formatter3 = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM, FormatStyle.MEDIUM);
@@ -168,6 +181,7 @@ public class Time_OCA_OCP_C5 {
     	
     	// ZoneDateTime. Contains a date, time and time zone.
     	// Oracle recommends avoiding time zones unless you really need them.
+    	System.out.println("-- ZoneDateTime");
     	System.out.println(ZonedDateTime.now());
     	System.out.println(ZoneId.systemDefault());
 		ZoneId.getAvailableZoneIds().stream().filter(z -> z.contains("US") && z.contains("Pacific")).sorted()
@@ -201,6 +215,8 @@ public class Time_OCA_OCP_C5 {
     	System.out.println(dateTimeNov); // 2016–11–06T01:30–05:00[US/Eastern]
     	dateTimeNov = dateTimeNov.plusHours(1);
     	System.out.println(dateTimeNov); // 2016–11–06T02:30–05:00[US/Eastern]
+    	
+    	String response = 4 <= 5 ? "yes": "no";
     	
     }			
 }

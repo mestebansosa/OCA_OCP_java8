@@ -60,6 +60,7 @@ public class Interfaces_OCA_OCP_C2 {
     	// interface vs. abstract class.
 		// both cannot be instantiated.
 		// Interface can be instantiated in case we use anonymous inner class in the code.
+		// Interface is implicity abstract. The compiler add the abstract for you.
     	// abstract class has constructor. It is a class. And it has a state.
     	// interface permits multiple inheritance, not a class.
     	// new interfaces are prepared to Stream collections.

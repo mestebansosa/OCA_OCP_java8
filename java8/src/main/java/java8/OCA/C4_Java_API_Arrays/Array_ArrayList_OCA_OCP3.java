@@ -116,7 +116,7 @@ public class Array_ArrayList_OCA_OCP3 {
 		// listCopy.remove(1); // throws UnsupportedOperationException
 		// listCopy.add("another"); // throws UnsupportedOperationException
 		
-		ArrayList<String> arrayListAddAll = new ArrayList<String>();
+		ArrayList<String> arrayListAddAll = new ArrayList<>();
 		List<String> arrayListAsList = new ArrayList<String>();
 		ArrayList<String> arrayListAssignation = new ArrayList<String>();
 		ArrayList<String> arrayListClone = new ArrayList<String>();

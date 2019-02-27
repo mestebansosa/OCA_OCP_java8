@@ -9,12 +9,12 @@ public class Wrapper_classes_autoboxing {
     	// Autoboxing 
     	//   automatically converts a primitive to the corresponding wrapper classes
     	// Creating
-    	// assignment
+    	// - assignment
     	Boolean bool1 = true;
-    	// Constructor. There is not no-argument constructor.
+    	// - Constructor. There is not no-argument constructor.
     	bool1 = new Boolean(true);
     	bool1 = new Boolean("true"); // all constructors accept String, except Character.
-    	// Using static method
+    	// - Using static method
     	bool1 = Boolean.valueOf(true);
     	bool1 = Boolean.valueOf("TrUe");
     	Double.valueOf(5); 
