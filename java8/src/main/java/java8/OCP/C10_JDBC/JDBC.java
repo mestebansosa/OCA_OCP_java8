@@ -292,7 +292,6 @@ public class JDBC {
 				Position: 8
 			42703
 			0
-	 */
-	
+	 */	
 
 }

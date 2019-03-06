@@ -151,12 +151,12 @@ public class IO {
 		
 		// The java.io stream classes
 		// Input/OutputStream (abstract)
-		//    FileInput/OutputStream low (data as bytes)
-		//    ObjectInput/OutputStream high (de/serialize primitive Java data types)
+		//    File[Input|Output]Stream low (data as bytes)
+		//    Object[Input|Output]Stream high (de/serialize primitive Java data types)
 		//    PrintStream high (Writes formatted representations of Java objects to a binary stream)
 		// Reader/Writer (abstract)
-		//    FileReader/Writer low (data as characters)
-		//    BufferReader/Writer high (data as buffer, better performance)
+		//    File[Reader|Writer] low (data as characters)
+		//    Buffer[Reader|Writer] high (data as buffer, better performance)
 		//    InputStreamReader/OutputStreamWriter high (data as characters from an existing Input/OutputStream)
 		//    PrintWriter high (Writes formatted representations of Java objects to a text-based output stream)
 		
@@ -291,8 +291,7 @@ public class IO {
 		
 		// other way to fill the array with x's
 		Arrays.fill(verify,'x');
-		console.format("Your password was " + (match ? "correct" : "incorrect"));		
-				
+		console.format("Your password was " + (match ? "correct" : "incorrect"));				
 		
 	}
 }

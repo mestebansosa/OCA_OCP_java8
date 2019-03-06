@@ -14,17 +14,13 @@ public class Bounds {
 	void method4(List<? super String> list) { // normal use.
 	}
 	
+	// method2() does not compile because the return type isn’t actually a type.
 	/*
-	<T> <? extends T> method2(List<? extends T> list) { // DOES NOT COMPILE
+	public <T> <? extends T> method2(List<? extends T> list) { // DOES NOT COMPILE
 		return list.get(0);
 	}
 	*/
-	
-	// method2() does not compile because the return type isn’t actually a type.
-	// public <T> <? extends T> method2(List<? extends T> list) { // DOES NOT COMPILE
-	// 	return list.get(0);
-	//	}
-		
+			
 	//tricky: take care, there is no ?
 	// <B extends A> B method3(List<B> list) {
 	//	return new B(); // DOES NOT COMPILE
@@ -40,7 +36,8 @@ public class Bounds {
     	
     	// Unbounded wildcards. You want to specify that any type is OK with you.
     	// List<String> cannot be assigned to List<Object>
-    	// List<Object> l = new ArrayList<String>(); DOES NOT COMPILE
+    	// List<Object> l = new ArrayList<String>(); DOES NOT COMPILE, 
+    	// Java is trying to protect us from ourselves: I could do l.add(new Integer(10));
     	List<?> unbounded = new ArrayList<String>(); 
     	// unbounded.add("Pepe"); Is inmutable.
     	

@@ -46,8 +46,8 @@ public class NIO2_Path {
 		path2 = Paths.get("c:","zooinfo","November","employees.txt");
 		path3 = Paths.get("/","home","zoodirector");
 		
-		// Paths path1 = Paths.get("/alligator/swim.txt"); // DOES NOT COMPILE
-		// Path path2 = Path.get("/crocodile/food.csv"); // DOES NOT COMPILE
+		// Paths path1 = Paths.get("/alligator/swim.txt"); // DOES NOT COMPILE type Paths not valid
+		// Path path2 = Path.get("/crocodile/food.csv"); // DOES NOT COMPILE Factory is Paths not Path
 		
 		// Paths.get(URI)
 		// A uniform resource identifier (URI) is a string of characters that identify a resource.

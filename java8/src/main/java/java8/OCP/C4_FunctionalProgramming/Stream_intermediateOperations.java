@@ -43,8 +43,7 @@ public class Stream_intermediateOperations {
 
 		// flatMap(). takes each element in the stream and makes any elements it
 		// contains top-level elements in a single stream. This is helpful when you want
-		// to remove empty elements from a stream or you want to combine a stream of
-		// lists
+		// to remove empty elements from a stream or you want to combine a stream of lists
 		List<String> zero = Arrays.asList();
 		List<String> one = Arrays.asList("Bonobo");
 		List<String> two = Arrays.asList("Mama Gorilla", "Baby Gorilla");
@@ -79,20 +78,11 @@ public class Stream_intermediateOperations {
 /*		Stream.generate(() -> "Olaf Lazisson").filter(n -> n.length() == 4).limit(2).sorted()
 				.forEach(System.out::println);
 */		
-		//Stream<Integer> infinite = Stream.iterate(1, x -> x + 1);
-		streamInfinite.get().limit(5)
-		.filter(x -> x % 2 == 1)
-		.forEach(System.out::print); // 135
+		streamInfinite.get().limit(5).filter(x -> x % 2 == 1).forEach(System.out::print); // 135
 		
-		streamInfinite.get().limit(5)
-		.peek(System.out::print)
-		.filter(x -> x % 2 == 1)
-		.forEach(System.out::print); // 11233455
-		
-		streamInfinite.get().filter(x -> x % 2 == 1)
-		.peek(System.out::print)
-		.limit(5)
-		.forEach(System.out::print); // 1133557799.
+		streamInfinite.get().limit(5).peek(System.out::print).filter(x -> x % 2 == 1).forEach(System.out::print); // 11233455
+
+		streamInfinite.get().filter(x -> x % 2 == 1).peek(System.out::print).limit(5).forEach(System.out::print); // 1133557799.
 		
 		// Printing a stream. Four ways.
 		s.forEach(System.out::println);

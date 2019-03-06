@@ -33,6 +33,7 @@ public class Generics {
 	public interface Shippable<T> {
 		void ship(T t);
 	}
+
 	// There are three ways a class can approach implementing this interface:
 	// The first is to specify the generic type in the class.
 	class ShippableRobotCrate implements Shippable<Robot> {

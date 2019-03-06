@@ -25,8 +25,8 @@ public class Map_API {
     	favorites.put("Jenny", "Bus Tour");
     	favorites.put("Tom", null);
     	System.out.println(favorites.putIfAbsent("Jenny", "Tram")); // returns Bus Tour
-    	System.out.println(favorites.putIfAbsent("Sam", "Tram")); // returns null
-    	System.out.println(favorites.putIfAbsent("Tom", "Tram")); // returns nul
+    	System.out.println(favorites.putIfAbsent("Sam", "Tram")); // associates and returns null
+    	System.out.println(favorites.putIfAbsent("Tom", "Tram")); // returns null
     	System.out.println(favorites); // {Tom=Tram, Jenny=Bus Tour, Sam=Tram}
     	// handle simple replacements.
     	
@@ -65,7 +65,7 @@ public class Map_API {
     	counts.clear();
     	counts.put("Jenny", 15);
     	counts.put("Tom", null);
-    	Function<String, Integer> function = (k) -> 1;
+    	Function<String, Integer> function = k -> 1;
     	counts.computeIfAbsent("Jenny", function); // 15
     	counts.computeIfAbsent("Sam", function); // 1
     	counts.computeIfAbsent("Tom", function); // 1

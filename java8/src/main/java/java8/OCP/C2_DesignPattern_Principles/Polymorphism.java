@@ -22,9 +22,9 @@ public class Polymorphism {
 	public static void main(String[] args) {
 		// Polymorphism is the ability of a single interface to support multiple underlying forms.
 		// A Java object may be accessed using:
-		// a reference with the same type as the object, 
-		// a reference that is a superclass of the object, or 
-		// a reference that defines an interface that the object implements, either directly or through a superclass. 
+		//   a reference with the same type as the object, 
+		//   a reference that is a superclass of the object, or 
+		//   a reference that defines an interface that the object implements, either directly or through a superclass. 
 		// Furthermore, a cast is not required if the object is being reassigned to a supertype or interface of the object.
 			
 		Lemur lemur = new Polymorphism().new Lemur();

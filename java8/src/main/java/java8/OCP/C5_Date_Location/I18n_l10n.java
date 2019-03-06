@@ -12,6 +12,7 @@ import java.util.Set;
 public class I18n_l10n {
 	
 	public static void printProperties(Locale locale) {
+		System.out.println("printProperties for " + locale);
 		// A resource bundle contains the local specific objects to be used by a program. 
 		// It is like a map with keys and values. 
 		// The resource bundle can be in a property file or in a Java class.
@@ -43,7 +44,7 @@ public class I18n_l10n {
     	// Localization includes translating strings to different languages.
     	// It includes outputting dates and numbers in the correct format for that locale.
 
-    	// Locale. Format: language in lowercase and county in uppercase. 
+    	// Locale. Format: language in lowercase and country in uppercase. 
     	// language only: fr. language and country: es_ES
     	// these Locales are invalid:
     	/*

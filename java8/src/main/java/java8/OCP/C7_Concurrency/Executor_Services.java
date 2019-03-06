@@ -15,10 +15,10 @@ public class Executor_Services {
 	// Executor methods are:
 	
 	/*
-	   newSingleThreadExecutor(), returns ExecutorService
-	   newSingleThreadScheduledExecutor(), returns ScheduledExecutorService
-	   newCachedThreadPool(), returns ExecutorService
+	   newSingleThreadExecutor(),        returns ExecutorService
+	   newCachedThreadPool(),            returns ExecutorService
 	   newFixedThreadPool(int nThreads), returns ExecutorService
+	   newSingleThreadScheduledExecutor(),   returns ScheduledExecutorService
 	   newScheduledThreadPool(int nThreads), returns ScheduledExecutorService
 		
 		While a single-thread executor will wait for an available thread to become available 
@@ -34,7 +34,6 @@ public class Executor_Services {
 		The newCachedThreadPool() will create a thread pool of unbounded size, allocating a new thread
 		any time one is required or all existing threads are busy. This is commonly used for pools that 
 		require executing many short-lived asynchronous tasks. 
-		   
 		For long-lived processes, usage of this executor is strongly discouraged.
 		   
 		newFixedThreadPool(1) is equals to newSingleThreadExecutor()

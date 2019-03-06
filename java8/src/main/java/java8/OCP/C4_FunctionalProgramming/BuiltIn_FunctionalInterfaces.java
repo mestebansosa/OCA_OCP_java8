@@ -20,6 +20,9 @@ import java.util.function.UnaryOperator;
 import java8.OCP.C3_Generics_Collections.Comparator_Comparable.Duck;
 
 public class BuiltIn_FunctionalInterfaces {
+	{
+		System.out.println("Initializer block. Runs before the constructor.");
+	}
 	
 	@FunctionalInterface
 	public interface Sprint {
@@ -56,7 +59,7 @@ public class BuiltIn_FunctionalInterfaces {
 	}
 	
 	public static void main(String[] args) {
-    	{System.out.println("Initializer block. Runs before the constructor.");}
+		new BuiltIn_FunctionalInterfaces();
 
 		/* 
 		Common functional interfaces

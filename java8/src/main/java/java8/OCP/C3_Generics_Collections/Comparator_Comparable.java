@@ -26,7 +26,7 @@ public class Comparator_Comparable {
 
 		/*
 		 There are three rules to know:
-         0 is returned when the current object is equal to the argument to compareTo().
+          0 is returned when the current object is equal to the argument to compareTo().
          <0 is returned when the current object is smaller than the argument to compareTo().
          >0 is returned when the current object is larger than the argument to compareTo().
 		 */

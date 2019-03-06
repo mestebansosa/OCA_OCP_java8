@@ -31,7 +31,7 @@ public class Exceptions_OCA_OCP_C6 {
 	// finally blocks. A traditional try statement must have either or both.
 	
 	// In order for a class to be created in the try clause, Java requires implement AutoCloseable. 
-	// allow to skip finally. Example. BufferedReadeer implements AutoCloseable
+	// allow to skip finally. Example. BufferedReader implements AutoCloseable
 	static String readFirstLineFromFile(String path) throws IOException {
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 			return br.readLine();
@@ -97,7 +97,6 @@ public class Exceptions_OCA_OCP_C6 {
     	//    It is part of the API and is well documented.
     	//    Examples: FileNotFoundException, IOException, ParseException, NotSerializableException, SQLException
 
-    	
     	// error exception. Can be referred as unchecked exception
     	//    Object.Throwable.Error
     	//    java.lang.Error
@@ -161,6 +160,7 @@ public class Exceptions_OCA_OCP_C6 {
 			} finally{
 			// s.nextInt(); // DOES NOT COMPILE
 		}
+		
 		// AutoCloseable interface: method: public void close() throws Exception
 		// Before there is the Closeable interface.
 		//   You can’t just put any random class in a try-with-resources statement. 
@@ -173,11 +173,15 @@ public class Exceptions_OCA_OCP_C6 {
 				throw new IllegalStateException("Cage door does not close");
 			}
 		}
+		
 		try (JammedTurkeyCage t = new JammedTurkeyCage()) {
 			System.out.println("put turkeys in");
 		} catch (IllegalStateException e) {
 			System.out.println("caught: " + e.getMessage());
+		} finally {
+			System.out.println("finally");
 		}
+		
 		// the close method is automatically called by try-with-resources
 		
 		// When multiple exceptions are thrown, all but the first are called "suppressed exceptions". 
